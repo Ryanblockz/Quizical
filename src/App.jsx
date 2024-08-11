@@ -1,35 +1,81 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
+import { useState, useEffect } from 'react'
 import './App.css'
+import {decode} from "html-entities"
+import Quiz from "./components/Quiz"
 
-function App() {
-  const [count, setCount] = useState(0)
+export default function App() {
+  const [startQuiz, setStartQuiz] = useState(false)
+  const [questions, setQuestions] = useState([])
 
+  useEffect(()=>{
+
+  const fetchData = async () => {
+    try{
+  const response = await fetch("https://opentdb.com/api.php?amount=5&type=multiple")
+  const data = await response.json()
+  const results = data.results
+
+  const questions = results.map(result =>{
+  const decodedQuestion = decode(result.question)
+  const correctAnswer = decode(result.correct_answer)
+  const incorrectAnswers = result.incorrect_answers.map(answer => decode(answer))
+  const allAnswers = shuffleArray([correctAnswer, ...incorrectAnswers])
+  
+  return{
+    question: decodedQuestion,
+    correctAnswer,
+    answers: allAnswers
+  }
+})
+
+setQuestions(questions)
+
+  } catch(error) {
+    console.log("Error fetching data:", error)
+  }}
+ 
+  if(startQuiz){
+    fetchData()
+   }
+},[startQuiz])
+
+
+const shuffleArray = (array) => {
+  let shuffled = [...array]
+  for (let i = shuffled.length - 1; i > 0; i--) {
+    let j = Math.floor(Math.random() * (i + 1));
+    [shuffled[i], shuffled[j]] = [shuffled[j], shuffled[i]]
+  }
+  return shuffled
+};
+
+  if(!startQuiz){
   return (
     <>
-      <div>
-        <a href="https://vitejs.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
+      <h1>Quizzical</h1>
+      <p>Fancy yourself a brain? Click the button to find out</p>
       <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
+        <button onClick={() => setStartQuiz(true)}>
+          Start Quiz
         </button>
-        <p>
-          Edit <code>src/App.jsx</code> and save to test HMR
-        </p>
       </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
+      
+    </>
+  )
+} else {
+  return (
+    <>
+  {questions.map((quiz, index) => (
+          <Quiz 
+            key={index} 
+            question={quiz.question} 
+            answers={quiz.answers} 
+            correctAnswer={quiz.correctAnswer} 
+          />
+        ))}
     </>
   )
 }
+}
 
-export default App
+
