@@ -48,7 +48,7 @@ button {
   cursor: pointer;
   transition: border-color 0.25s;
   transition: font-weight 0.3s ease;
-  max-width: 120px;
+  max-width: 160px;
 }
 
 button:hover {
@@ -86,4 +86,81 @@ button:focus-visible {
   position: absolute;
   bottom: 0;
   left: 0;
+}
+
+.quiz {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.quizAnswersContainer {
+  display: flex;
+  gap: 2em;
+}
+
+.answers {
+  border: 2px solid #4D5B9E;
+  border-radius: 13px;
+  padding: .3em;
+  font-weight: 700;
+  list-style-type: none;
+  user-select: text;
+  cursor: pointer;
+}
+
+.answers.selected {
+  background-color: #D6DBF5;
+  border: none;
+}
+
+.answers.correct {
+  background-color: green;
+  color: white;
+}
+
+.answers.incorrect {
+  background-color: red;
+  color: white;
+}
+
+.answers.unselected {
+  background-color: lightgray;
+  color: white;
+}
+
+.quizAnswersContainer {
+  list-style-type: none;
+  padding: 0;
+}
+
+h2 {
+  max-width: 700px;
+}
+
+.selector-group {
+  margin-bottom: 15px;
+}
+
+.selector-group label {
+  display: block;
+  margin-bottom: 5px;
+  font-weight: bold;
+  color: #333;
+}
+
+.selector-group select {
+  width: 100%;
+  color: #242424;
+  padding: 8px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  font-size: 16px;
+  background-color: #f9f9f9;
+  outline: none;
+  transition: border-color 0.3s;
+}
+
+.selector-group select:focus {
+  border-color: #007bff;
 }

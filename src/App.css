@@ -1,8 +1,8 @@
-/* body {
+body {
   font-family: "karla", sans-serif;
   color: #293264;
   background-color: #F5F7FB;
-} */
+}
 
 
 #root {
@@ -10,9 +10,4 @@
   margin: 0 auto;
   padding: 2rem;
   text-align: center;
-}
-
-
-.card {
-  padding: 2em;
 }
