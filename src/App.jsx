@@ -2,6 +2,10 @@ import { useState, useEffect } from 'react'
 import './App.css'
 import { decode } from "html-entities"
 import Quiz from "./components/Quiz"
+import Auth from "./components/Auth"
+import { auth } from './firebase'
+import { onAuthStateChanged, signOut } from "firebase/auth"
+import Leaderboard from './components/Leaderboard.jsx'
 
 export default function App() {
 
@@ -41,6 +45,12 @@ export default function App() {
   const [quizLength, setQuizLength] = useState(5)
   const [difficulty, setDifficulty] = useState("easy")
   const [colorMode, setColorMode] = useState("light")
+  const [startTime, setStartTime] = useState(null)
+  const [elapsedTime, setElapsedTime] = useState(0)
+  const [user, setUser] = useState(null)
+  const [perfectStreaks, setPerfectStreaks] = useState(0)
+  const [bestTime, setBestTime] = useState(null)
+  const [showLeaderboard, setShowLeaderboard] = useState(false)
 
   useEffect(() => {
     document.querySelector('html').style.filter = colorMode === "dark" ? "invert(100%) hue-rotate(180deg)" : "";
@@ -51,6 +61,24 @@ export default function App() {
       fetchQuizData()
     }
   }, [startQuiz])
+
+  useEffect(() => {
+    let interval
+    if (startQuiz && !submitted) {
+      setStartTime(Date.now())
+      interval = setInterval(() => {
+        setElapsedTime(Date.now() - startTime)
+      }, 1000)
+    }
+    return () => clearInterval(interval)
+  }, [startQuiz, submitted, startTime])
+
+  useEffect(() => {
+    const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
+      setUser(currentUser);
+    });
+    return () => unsubscribe();
+  }, []);
 
   const fetchQuizData = async () => {
     try {
@@ -82,14 +110,41 @@ export default function App() {
 
   const handleSubmit = () => {
     if (!submitted) {
-      setScore(calculateScore())
-      setSubmitted(true)
+      const currentScore = calculateScore();
+      const currentTime = Date.now() - startTime;
+      setScore(currentScore);
+      setSubmitted(true);
+
+      if (currentScore === quizLength && currentTime <= 120000) { // 2 minutes in milliseconds
+        setPerfectStreaks(prevStreaks => prevStreaks + 1);
+        if (!bestTime || currentTime < bestTime) {
+          setBestTime(currentTime);
+        }
+        // TODO: Update user's score in the database
+        updateUserScore(user.uid, perfectStreaks + 1, currentTime);
+      } else {
+        setPerfectStreaks(0);
+      }
     } else {
       setStartQuiz(false)
       setQuestions([])
       setSelectedAnswers([])
       setScore(0)
+      setStartTime(null)
+      setEndTime(null)
     }
+  }
+
+  const updateUserScore = async (userId, streaks, time) => {
+    // TODO: Implement updating user score in your database
+    console.log(`Updating score for user ${userId}: ${streaks} streaks, ${time} ms`);
+  }
+
+  const formatTime = (milliseconds) => {
+    const totalSeconds = Math.floor(milliseconds / 1000)
+    const minutes = Math.floor(totalSeconds / 60)
+    const seconds = totalSeconds % 60
+    return `${minutes}:${seconds.toString().padStart(2, '0')}`
   }
 
   const renderSelector = (label, id, value, onChange, options) => (
@@ -103,11 +158,49 @@ export default function App() {
     </div>
   )
 
+  const handleSignOut = () => {
+    signOut(auth).then(() => {
+      setUser(null);
+    }).catch((error) => {
+      console.error("Error signing out", error);
+    });
+  };
+
+  const DarkModeToggle = () => (
+    <button
+      className={`modeButton darkModeButton ${colorMode === "dark" ? "darkMode" : "lightMode"}`}
+      onClick={() => setColorMode(prev => prev === "dark" ? "light" : "dark")}
+    >
+      {colorMode === "dark" ? "Light Mode" : "Dark Mode"}
+    </button>
+  );
+
+  const SignOutButton = () => (
+    <button className={`modeButton signOutButton ${colorMode === "dark" ? "darkMode" : "lightMode"}`} onClick={handleSignOut}>
+      Sign Out
+    </button>
+  );
+
+  const LeaderboardButton = () => (
+    <button
+      onClick={toggleLeaderboard}
+      className={`modeButton leaderboard-button-unique ${colorMode === "dark" ? "darkMode" : ""}`}
+    >
+      Leaderboard
+    </button>
+  );
+
   const quizSetup = (
     <>
-      <button className='darkModeButton' onClick={() => setColorMode(prev => prev === "dark" ? "light" : "dark")}>
-        Dark Mode
-      </button>
+      <div className="topButtons">
+        <div className="leftButtons">
+          <LeaderboardButton />
+        </div>
+        <div className="rightButtons">
+          <DarkModeToggle />
+          {user && <SignOutButton />}
+        </div>
+      </div>
       <h1>Quizzical</h1>
       {renderSelector("Select Category:", "category-select", selectedCategory,
         (e) => setSelectedCategory(e.target.value),
@@ -127,6 +220,9 @@ export default function App() {
 
   const quizContent = (
     <>
+      <div className="timer fixed-timer">
+        Time: {formatTime(elapsedTime)}
+      </div>
       {questions.map((quiz, index) => (
         <Quiz
           key={index}
@@ -139,7 +235,12 @@ export default function App() {
         />
       ))}
       <div className='bottomBox'>
-        {submitted && <p className='score'>You scored {score}/{quizLength} correct answers.</p>}
+        {submitted && (
+          <>
+            <p className='score'>You scored {score}/{quizLength} correct answers.</p>
+            <p className='time'>Time taken: {formatTime(elapsedTime)}</p>
+          </>
+        )}
         <div>
           <button onClick={handleSubmit}>{submitted ? 'Play New Game' : 'Submit Quiz'}</button>
         </div>
@@ -147,5 +248,30 @@ export default function App() {
     </>
   )
 
-  return startQuiz ? quizContent : quizSetup
+  const toggleLeaderboard = () => {
+    setShowLeaderboard(!showLeaderboard);
+  };
+
+  return (
+    <div className="app-container">
+      <div className="topButtons">
+        <div className="leftButtons">
+          <LeaderboardButton />
+        </div>
+        <div className="rightButtons">
+          <DarkModeToggle />
+          {user && <SignOutButton />}
+        </div>
+      </div>
+      {showLeaderboard ? (
+        <Leaderboard user={user} />
+      ) : (
+        !user ? (
+          <Auth setUser={setUser} />
+        ) : (
+          startQuiz ? quizContent : quizSetup
+        )
+      )}
+    </div>
+  )
 }

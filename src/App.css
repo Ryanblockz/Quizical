@@ -1,7 +1,681 @@
 #root {
-  max-width: 1280px;
+  max-width: 80rem;
   margin: 0 auto;
   padding: 2rem;
+  padding-top: 4.375rem;
+  position: relative;
+  z-index: 1;
+}
 
+.timer {
+  font-size: 2em;
+  font-weight: 900;
+  text-align: center;
+  padding: 0.9375rem;
+  background-color: rgba(255, 255, 255, 0.9);
+  z-index: 1000;
+  box-shadow: 0 0.125rem 0.3125rem rgba(0, 0, 0, 0.1);
+}
 
+.fixed-timer {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+}
+
+/* If you're using dark mode, add this to ensure visibility */
+.dark-mode .fixed-timer {
+  background-color: rgba(0, 0, 0, 0.9);
+  color: white;
+}
+
+/* ... existing styles ... */
+
+.auth-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 1.875rem;
+  border: 0.0625rem solid #ccc;
+  border-radius: 0.3125rem;
+  max-width: 25rem;
+  width: 90%;
+  margin: 0 auto;
+  margin-top: 3.125rem;
+  z-index: 2;
+  position: relative;
+  background-color: #F5F7FB;
+  color: #293264;
+}
+
+.auth-container input,
+.auth-container .password-input-container {
+  width: 100%;
+  margin-bottom: 0.9375rem;
+  box-sizing: border-box;
+}
+
+.auth-container input {
+  background-color: #F5F7FB;
+  color: #293264;
+  border: 0.0625rem solid #4D5B9E;
+  padding: 0.75rem 0.9375rem;
+  border-radius: 0.25rem;
+  font-size: 1rem;
+}
+
+.password-input-container {
+  position: relative;
+  width: 100%;
+  margin-bottom: 0.9375rem;
+}
+
+.password-input-container input {
+  width: 100%;
+  padding-right: 3.5rem;
+  box-sizing: border-box;
+  border: 0.0625rem solid #4D5B9E;
+}
+
+.toggle-password {
+  position: absolute;
+  right: 0.5rem;
+  top: 50%;
+  transform: translateY(-50%);
+  background: none;
+  border: none;
+  color: #4D5B9E;
+  cursor: pointer;
+  font-size: 0.75rem;
+  padding: 0.25rem 0.5rem;
+  height: auto;
+  min-height: auto;
+  line-height: 1;
+  margin: 0;
+}
+
+.toggle-password:hover {
+  text-decoration: underline;
+}
+
+.auth-container button {
+  width: 100%;
+  margin-bottom: 0.9375rem;
+  padding: 0.75rem 0.9375rem;
+  border: none;
+  border-radius: 0.25rem;
+  font-size: 1.125rem;
+  cursor: pointer;
+  transition: background-color 0.3s;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  line-height: 1.2;
+  min-height: 3.125rem;
+  box-sizing: border-box;
+}
+
+.auth-container .toggle-password {
+  width: auto;
+  min-height: auto;
+  margin-bottom: 0;
+  padding: 0.25rem 0.5rem;
+  font-size: 0.75rem;
+  line-height: 1;
+}
+
+.auth-container>h2 {
+  color: #293264;
+  font-size: 1.5rem;
+}
+
+.auth-container button[type="submit"] {
+  background-color: #4D5B9E;
+  color: #F5F7FB;
+  font-size: 1.25rem;
+  font-weight: bold;
+}
+
+.auth-container button[type="submit"]:hover {
+  background-color: #414e8c;
+}
+
+.auth-container button:not([type="submit"]) {
+  background-color: #f0f0f0;
+  color: #333;
+}
+
+.auth-container button:not([type="submit"]):hover {
+  background-color: #e0e0e0;
+}
+
+.auth-container p {
+  cursor: pointer;
+  color: #4D5B9E;
+  text-decoration: underline;
+  margin-top: 1.25rem;
+  font-size: 1rem;
+}
+
+.darkModeButton {
+  position: fixed;
+  top: 0.625rem;
+  left: 0.625rem;
+  z-index: 1002;
+  padding: 0.3125rem 0.625rem;
+  border-radius: 0.3125rem;
+  cursor: pointer;
+  font-weight: bold;
+  transition: background-color 0.3s, color 0.3s;
+}
+
+.darkModeButton.lightMode {
+  background-color: #333;
+  color: #fff;
+  border: 0.0625rem solid #666;
+}
+
+.darkModeButton.darkMode {
+  background-color: #f0f0f0;
+  color: #333;
+  font-weight: 900;
+  border: 0.0625rem solid #ccc;
+}
+
+/* Adjust hover effects */
+.darkModeButton.lightMode:hover {
+  background-color: #444;
+}
+
+.darkModeButton.darkMode:hover {
+  background-color: #e0e0e0;
+}
+
+.google-button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: #F5F7FB;
+  color: #293264;
+  border: 0.0625rem solid #4D5B9E;
+  font-size: 0.875rem;
+}
+
+.google-button .continue-with {
+  font-size: 0.75rem;
+  margin-right: 0.25rem;
+}
+
+.google-button .google-text {
+  font-size: 0.875rem;
+}
+
+.google-text span {
+  color: inherit;
+  font-size: 0.875rem;
+}
+
+.google-button:hover {
+  background-color: #e8eaf6;
+}
+
+.google-text {
+  font-weight: bold;
+  color: #4285F4;
+}
+
+/* Dark mode adjustments */
+.dark-mode .google-button {
+  background-color: #333;
+  color: #fff;
+  border-color: #666;
+}
+
+.dark-mode .google-button:hover {
+  background-color: #444;
+}
+
+.dark-mode .google-o1 {
+  color: #F28B82;
+}
+
+.dark-mode .google-o2 {
+  color: #FDD663;
+}
+
+.dark-mode .google-g {
+  color: #8AB4F8;
+}
+
+.dark-mode .google-l {
+  color: #81C995;
+}
+
+.dark-mode .google-e {
+  color: #F28B82;
+}
+
+body {
+  position: relative;
+}
+
+.bottom-left,
+.top-right {
+  position: fixed;
+  z-index: -1;
+}
+
+.bottom-left {
+  bottom: 0;
+  left: 0;
+}
+
+.top-right {
+  top: 0;
+  right: 0;
+}
+
+.auth-container {
+  position: relative;
+  z-index: 2;
+  background-color: rgba(255, 255, 255, 0.9);
+}
+
+/* Add styles for the quiz content */
+.quiz-setup,
+.quiz-content {
+  position: relative;
+  z-index: 2;
+}
+
+/* Style for the Start Quiz button */
+.card button {
+  position: relative;
+  z-index: 3;
+}
+
+/* Base styles for mobile devices (375px and up) */
+@media screen and (min-width: 23.4375em) {
+  #root {
+    padding: 1rem;
+    padding-top: 3.75rem;
+  }
+
+  .auth-container {
+    width: 95%;
+    padding: 1.25rem;
+    margin-top: 1.875rem;
+  }
+
+  .auth-container input,
+  .auth-container button {
+    font-size: 0.875rem;
+    padding: 0.625rem;
+  }
+
+  .auth-container>h2 {
+    font-size: 1.5rem;
+  }
+
+  .google-button {
+    font-size: 0.75rem;
+  }
+
+  .google-button .continue-with {
+    font-size: 0.625rem;
+  }
+
+  .google-button .google-text {
+    font-size: 0.75rem;
+  }
+
+  .bottom-left,
+  .top-right {
+    width: 40%;
+  }
+}
+
+/* Styles for tablets (768px and up) */
+@media screen and (min-width: 48em) {
+  #root {
+    padding: 1.5rem;
+    padding-top: 4.375rem;
+  }
+
+  .auth-container {
+    max-width: 28.125rem;
+    padding: 1.5625rem;
+  }
+
+  .auth-container input,
+  .auth-container button {
+    font-size: 1rem;
+    padding: 0.75rem;
+  }
+
+  .auth-container>h2 {
+    font-size: 1.75rem;
+  }
+
+  .google-button {
+    font-size: 0.875rem;
+  }
+
+  .google-button .continue-with {
+    font-size: 0.75rem;
+  }
+
+  .google-button .google-text {
+    font-size: 0.875rem;
+  }
+
+  .bottom-left,
+  .top-right {
+    width: 30%;
+  }
+}
+
+/* Styles for desktop (1024px and up) */
+@media screen and (min-width: 64em) {
+  #root {
+    padding: 2rem;
+    padding-top: 5rem;
+  }
+
+  .auth-container {
+    max-width: 31.25rem;
+    padding: 1.875rem;
+  }
+
+  .auth-container input,
+  .auth-container button {
+    font-size: 1.125rem;
+    padding: 0.9375rem;
+  }
+
+  .auth-container>h2 {
+    font-size: 2rem;
+  }
+
+  .google-button {
+    font-size: 1rem;
+  }
+
+  .google-button .continue-with {
+    font-size: 0.875rem;
+  }
+
+  .google-button .google-text {
+    font-size: 1rem;
+  }
+
+  .bottom-left,
+  .top-right {
+    width: 25%;
+  }
+}
+
+/* Add these new styles to your existing CSS */
+
+.topButtons {
+  position: fixed;
+  top: 0.625rem;
+  left: 0.625rem;
+  right: 0.625rem;
+  display: flex;
+  justify-content: space-between;
+  z-index: 1001;
+}
+
+.leftButtons {
+  display: flex;
+  gap: 0.625rem;
+}
+
+.rightButtons {
+  display: flex;
+  gap: 0.625rem;
+}
+
+.modeButton {
+  padding: 0.3125rem 0.625rem;
+  border-radius: 0.3125rem;
+  cursor: pointer;
+  font-weight: bold;
+  transition: background-color 0.3s, color 0.3s;
+  font-size: 0.875rem;
+  border: 0.0625rem solid;
+  height: 2.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  white-space: nowrap;
+}
+
+.darkModeButton,
+.signOutButton,
+.leaderboard-button {
+  min-width: 6.25rem;
+}
+
+.darkModeButton,
+.signOutButton {
+  background-color: #333;
+  color: #fff;
+  border-color: #666;
+}
+
+.darkModeButton.darkMode,
+.signOutButton.darkMode {
+  background-color: #f0f0f0;
+  color: #333;
+  border-color: #ccc;
+}
+
+.leaderboard-button-unique {
+  background-color: #4CAF50;
+  /* A vibrant green color */
+  color: white;
+  border: 2px solid #45a049;
+  font-size: 1.1rem;
+  font-weight: bold;
+  text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.2);
+  padding: 0.3125rem 0.625rem;
+  border-radius: 0.3125rem;
+  /* Keeping the original border radius */
+  cursor: pointer;
+  transition: all 0.3s ease;
+  height: 2.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  white-space: nowrap;
+  min-width: 7rem;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+}
+
+.leaderboard-button-unique:hover {
+  background-color: #45a049;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+/* Dark mode styles for the leaderboard button */
+.darkMode .leaderboard-button-unique {
+  background-color: #66bb6a;
+  /* Lighter green for dark mode */
+  color: #1a1a1a;
+  border-color: #81c784;
+  text-shadow: 1px 1px 2px rgba(255, 255, 255, 0.2);
+}
+
+.darkMode .leaderboard-button-unique:hover {
+  background-color: #81c784;
+}
+
+/* Remove any conflicting styles */
+.darkModeButton,
+.signOutButton {
+  position: static;
+  top: auto;
+  left: auto;
+}
+
+/* Add these new styles for the selector-group */
+.selector-group select {
+  background-color: #F5F7FB;
+  color: #293264;
+  border: 0.0625rem solid #4D5B9E;
+  border-radius: 0.25rem;
+  padding: 0.5rem;
+  font-size: 1rem;
+  cursor: pointer;
+}
+
+.selector-group label {
+  color: #293264;
+  font-weight: bold;
+  margin-bottom: 0.3125rem;
+  display: block;
+}
+
+.error-message {
+  color: #d32f2f;
+  font-size: 0.875rem;
+  margin-top: 0.5rem;
+  margin-bottom: 0.5rem;
+  font-weight: bold;
+  text-decoration: none !important;
+}
+
+/* This additional rule ensures no text decoration on any child elements */
+.error-message * {
+  text-decoration: none !important;
+}
+
+.auth-toggle {
+  cursor: pointer;
+  color: #4D5B9E;
+  text-decoration: underline;
+  margin-top: 1.25rem;
+  font-size: 1rem;
+}
+
+.forgot-password {
+  font-size: 1.2rem;
+  color: #d32f2f;
+  margin-top: 0.5rem;
+  margin-bottom: 0.5rem;
+}
+
+.reset-email-sent {
+  color: #4CAF50;
+  font-size: 1rem;
+  margin-top: 0.625rem;
+  margin-bottom: 0.625rem;
+}
+
+/* Adjust input placeholder color */
+.auth-container input::placeholder {
+  color: #293264;
+  opacity: 0.7;
+}
+
+/* Adjust focus styles for inputs */
+.auth-container input:focus,
+.password-input-container input:focus {
+  outline: none;
+  border-color: #4D5B9E;
+  box-shadow: 0 0 0 2px rgba(77, 91, 158, 0.2);
+}
+
+.forgot-password-button {
+  background: none;
+  border: none;
+  color: #4D5B9E;
+  cursor: pointer;
+  font-size: 0.875rem;
+  padding: 0.5rem 0;
+  text-decoration: underline;
+  width: auto;
+  margin-bottom: 1rem;
+}
+
+.forgot-password-button:hover {
+  color: #414e8c;
+}
+
+.reset-email-sent {
+  color: #4CAF50;
+  font-size: 0.875rem;
+  margin-bottom: 1rem;
+}
+
+.leaderboard-container {
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 20px;
+}
+
+.leaderboard-container table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.leaderboard-container th,
+.leaderboard-container td {
+  padding: 10px;
+  text-align: left;
+  border-bottom: 1px solid #ddd;
+}
+
+.leaderboard-container th {
+  background-color: #f2f2f2;
+}
+
+.leaderboard-container .current-user {
+  font-weight: bold;
+  background-color: #e6f7ff;
+}
+
+.leaderboard-button-unique {
+  background-color: #4CAF50;
+  /* A vibrant green color */
+  color: white;
+  border: 2px solid #45a049;
+  font-size: 1.1rem;
+  font-weight: bold;
+  text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.2);
+  padding: 0.5rem 1rem;
+  border-radius: 25px;
+  /* Rounded corners */
+  cursor: pointer;
+  transition: all 0.3s ease;
+  height: 2.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  white-space: nowrap;
+  min-width: 7rem;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+}
+
+.leaderboard-button-unique:hover {
+  background-color: #45a049;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+/* Dark mode styles for the leaderboard button */
+.darkMode .leaderboard-button-unique {
+  background-color: #66bb6a;
+  /* Lighter green for dark mode */
+  color: #1a1a1a;
+  border-color: #81c784;
+  text-shadow: 1px 1px 2px rgba(255, 255, 255, 0.2);
+}
+
+.darkMode .leaderboard-button-unique:hover {
+  background-color: #81c784;
 }

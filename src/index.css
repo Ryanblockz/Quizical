@@ -32,6 +32,7 @@ body {
   font-family: "karla", sans-serif;
   color: #293264;
   background-color: #F5F7FB;
+  z-index: 1;
 }
 
 h1 {
@@ -94,6 +95,7 @@ button:active {
   position: fixed;
   bottom: 0;
   left: 0;
+  z-index: 0;
 }
 
 .quiz {
