@@ -1,13 +1,7 @@
-body {
-  font-family: "karla", sans-serif;
-  color: #293264;
-  background-color: #F5F7FB;
-}
-
-
 #root {
   max-width: 1280px;
   margin: 0 auto;
   padding: 2rem;
-  text-align: center;
+
+
 }

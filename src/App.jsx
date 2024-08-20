@@ -4,7 +4,6 @@ import { decode } from "html-entities"
 import Quiz from "./components/Quiz"
 
 export default function App() {
-
   const categories = [
     { id: 9, name: 'General Knowledge' },
     { id: 10, name: 'Entertainment: Books' },
@@ -32,151 +31,134 @@ export default function App() {
     { id: 32, name: 'Entertainment: Cartoon & Animations' }
   ]
 
-  const [startQuiz, setStartQuiz] = useState(false)
-  const [questions, setQuestions] = useState([])
-  const [selectedAnswers, setSelectedAnswers] = useState([])
-  const [submitted, setSubmitted] = useState(false)
-  const [score, setScore] = useState(0)
-  const [selectedCategory, setSelectedCategory] = useState(categories[0].id)
-  const [quizLength, setQuizLength] = useState(5)
-  const [difficulty, setDifficulty] = useState("easy")
+  const [quizState, setQuizState] = useState({
+    startQuiz: false,
+    questions: [],
+    selectedAnswers: [],
+    submitted: false,
+    score: 0,
+    selectedCategory: categories[0].id,
+    quizLength: 5,
+    difficulty: "easy",
+    colorMode: "light"
+  })
 
   useEffect(() => {
+    document.querySelector('html').style.filter = quizState.colorMode === "dark" ? "invert(100%) hue-rotate(180deg)" : "";
+  }, [quizState.colorMode])
 
-    const fetchData = async () => {
-
-      try {
-        const response = await fetch(`https://opentdb.com/api.php?amount=${quizLength}&category=${selectedCategory}&type=multiple&difficulty=${difficulty}`)
-        const data = await response.json()
-        const results = data.results
-
-        const questions = results.map(result => {
-          const decodedQuestion = decode(result.question)
-          const correctAnswer = decode(result.correct_answer)
-          const incorrectAnswers = result.incorrect_answers.map(answer => decode(answer))
-          const allAnswers = shuffleArray([correctAnswer, ...incorrectAnswers])
-
-          return {
-            question: decodedQuestion,
-            correctAnswer,
-            answers: allAnswers
-          }
-        })
-
-        setQuestions(questions)
-        setSelectedAnswers(new Array(questions.length).fill(null))
-        setSubmitted(false)
-
-      } catch (error) {
-        console.log("Error fetching data:", error)
-      }
+  useEffect(() => {
+    if (quizState.startQuiz) {
+      fetchQuizData()
     }
+  }, [quizState.startQuiz])
 
-    if (startQuiz) {
-      fetchData()
+  const fetchQuizData = async () => {
+    try {
+      const response = await fetch(`https://opentdb.com/api.php?amount=${quizState.quizLength}&category=${quizState.selectedCategory}&type=multiple&difficulty=${quizState.difficulty}`)
+      const { results } = await response.json()
+
+      const questions = results.map(({ question, correct_answer, incorrect_answers }) => ({
+        question: decode(question),
+        correctAnswer: decode(correct_answer),
+        answers: shuffleArray([decode(correct_answer), ...incorrect_answers.map(decode)])
+      }))
+
+      setQuizState(prev => ({
+        ...prev,
+        questions,
+        selectedAnswers: new Array(questions.length).fill(null),
+        submitted: false
+      }))
+    } catch (error) {
+      console.log("Error fetching data:", error)
     }
-  }, [startQuiz])
-
-
-  const shuffleArray = (array) => {
-    let shuffled = [...array]
-    for (let i = shuffled.length - 1; i > 0; i--) {
-      let j = Math.floor(Math.random() * (i + 1));
-      [shuffled[i], shuffled[j]] = [shuffled[j], shuffled[i]]
-    }
-    return shuffled
   }
 
+  const shuffleArray = (array) => {
+    return array.sort(() => Math.random() - 0.5)
+  }
 
   const handleAnswerSelect = (index, answer) => {
-    const updatedAnswers = [...selectedAnswers]
-    updatedAnswers[index] = answer
-    setSelectedAnswers(updatedAnswers)
+    setQuizState(prev => ({
+      ...prev,
+      selectedAnswers: prev.selectedAnswers.map((item, i) => i === index ? answer : item)
+    }))
   }
 
   const calculateScore = () => {
-    let score = 0;
-    selectedAnswers.forEach((answer, index) => {
-      if (answer === questions[index].correctAnswer) {
-        score++
-      }
-    })
-    return score
+    return quizState.selectedAnswers.reduce((score, answer, index) =>
+      answer === quizState.questions[index].correctAnswer ? score + 1 : score, 0)
   }
 
   const handleSubmit = () => {
-    if (!submitted) {
-      const calculatedScore = calculateScore()
-      setScore(calculatedScore)
-      setSubmitted(true)
+    if (!quizState.submitted) {
+      setQuizState(prev => ({
+        ...prev,
+        score: calculateScore(),
+        submitted: true
+      }))
     } else {
-      setStartQuiz(false)
-      setQuestions([])
-      setSelectedAnswers([])
-      setScore(0)
+      setQuizState(prev => ({
+        ...prev,
+        startQuiz: false,
+        questions: [],
+        selectedAnswers: [],
+        score: 0
+      }))
     }
   }
 
-  if (!startQuiz) {
-    return (
-      <>
-        <h1>Quizzical</h1>
-        <div className="selector-group">
-          <label htmlFor="category-select">Select Category:</label>
-          <select id="category-select" onChange={(e) => setSelectedCategory(e.target.value)} value={selectedCategory}>
-            {categories.map(category => (
-              <option key={category.id} value={category.id}>{category.name}</option>
+  const renderQuizSetup = () => (
+    <>
+      <button className='darkModeButton' onClick={() => setQuizState(prev => ({ ...prev, colorMode: prev.colorMode === "dark" ? "light" : "dark" }))} >
+        Dark Mode
+      </button>
+      <h1>Quizzical</h1>
+      {[
+        { label: "Select Category:", id: "category-select", value: quizState.selectedCategory, onChange: e => setQuizState(prev => ({ ...prev, selectedCategory: e.target.value })), options: categories.map(category => ({ value: category.id, text: category.name })) },
+        { label: "Select Quiz Length:", id: "quiz-length-select", value: quizState.quizLength, onChange: e => setQuizState(prev => ({ ...prev, quizLength: e.target.value })), options: Array.from({ length: 10 }, (_, i) => ({ value: i + 1, text: i + 1 })) },
+        { label: "Select Difficulty:", id: "difficulty-select", value: quizState.difficulty, onChange: e => setQuizState(prev => ({ ...prev, difficulty: e.target.value })), options: [{ value: "easy", text: "Easy" }, { value: "medium", text: "Medium" }, { value: "hard", text: "Hard" }] }
+      ].map(({ label, id, value, onChange, options }) => (
+        <div key={id} className="selector-group">
+          <label htmlFor={id}>{label}</label>
+          <select id={id} onChange={onChange} value={value}>
+            {options.map(option => (
+              <option key={option.value} value={option.value}>{option.text}</option>
             ))}
           </select>
         </div>
+      ))}
+      <p>Fancy yourself a brain? Click the button to find out</p>
+      <div className="card">
+        <button onClick={() => setQuizState(prev => ({ ...prev, startQuiz: true }))}>
+          Start Quiz
+        </button>
+      </div>
+    </>
+  )
 
-        <div className="selector-group">
-          <label htmlFor="quiz-length-select">Select Quiz Length:</label>
-          <select id="quiz-length-select" onChange={(e) => setQuizLength(e.target.value)} value={quizLength}>
-            {Array.from({ length: 10 }, (_, i) => i + 1).map(length => (
-              <option key={length} value={length}>{length}</option>
-            ))}
-          </select>
-        </div>
-
-        <div className="selector-group">
-          <label htmlFor="difficulty-select">Select Difficulty:</label>
-          <select id="difficulty-select" onChange={(e) => setDifficulty(e.target.value)} value={difficulty}>
-            <option value="easy">Easy</option>
-            <option value="medium">Medium</option>
-            <option value="hard">Hard</option>
-          </select>
-        </div>
-        <p>Fancy yourself a brain? Click the button to find out</p>
-        <div className="card">
-          <button onClick={() => setStartQuiz(true)}>
-            Start Quiz
-          </button>
-        </div>
-
-      </>
-    )
-  } else {
-    return (
-      <>
-        {questions.map((quiz, index) => (
-          <Quiz
-            key={index}
-            question={quiz.question}
-            answers={quiz.answers}
-            correctAnswer={quiz.correctAnswer}
-            selectedAnswer={selectedAnswers[index]}
-            onAnswerSelect={(answer) => handleAnswerSelect(index, answer)}
-            submitted={submitted}
-          />
-        ))}
-        {submitted && <p>You scored {score}/{quizLength}</p>}
+  const renderQuiz = () => (
+    <>
+      {quizState.questions.map((quiz, index) => (
+        <Quiz
+          key={index}
+          question={quiz.question}
+          answers={quiz.answers}
+          correctAnswer={quiz.correctAnswer}
+          selectedAnswer={quizState.selectedAnswers[index]}
+          onAnswerSelect={(answer) => handleAnswerSelect(index, answer)}
+          submitted={quizState.submitted}
+        />
+      ))}
+      <div className='bottomBox'>
+        {quizState.submitted && <p className='score'>You scored {quizState.score}/{quizState.quizLength} correct answers.</p>}
         <div>
-          <button onClick={handleSubmit}>{submitted ? 'Play New Game' : 'Submit Quiz'}</button>
+          <button onClick={handleSubmit}>{quizState.submitted ? 'Play New Game' : 'Submit Quiz'}</button>
         </div>
-      </>
-    )
-  }
+      </div>
+    </>
+  )
+
+  return quizState.startQuiz ? renderQuiz() : renderQuizSetup()
 }
-
-

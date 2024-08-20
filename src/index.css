@@ -1,16 +1,16 @@
 :root {
-  font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
+  font-family: "karla", sans-serif;
   line-height: 1.5;
   font-weight: 400;
-
   color-scheme: light dark;
-  color: rgba(255, 255, 255, 0.87);
-  background-color: #242424;
-
+  color: #293264;
+  background-color: #F5F7FB;
   font-synthesis: none;
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  text-align: center;
+
 }
 
 a {
@@ -29,6 +29,9 @@ body {
   place-items: center;
   min-width: 320px;
   min-height: 100vh;
+  font-family: "karla", sans-serif;
+  color: #293264;
+  background-color: #F5F7FB;
 }
 
 h1 {
@@ -41,7 +44,7 @@ button {
   color: #ffffff;
   background-color: #4D5B9E;
   border-radius: 8px;
-  border: 1px solid transparent;
+  border: none;
   padding: 0.6em 1.2em;
   font-size: 1em;
   font-weight: 500;
@@ -52,14 +55,14 @@ button {
 }
 
 button:hover {
-  border-color: black;
-  font-weight: 700;
+  background-color: #333;
 }
 
-button:focus,
-button:focus-visible {
-  outline: 4px auto -webkit-focus-ring-color;
+button:active {
+  background-color: red;
+  color: black;
 }
+
 
 @media (prefers-color-scheme: light) {
   :root {
@@ -76,14 +79,19 @@ button:focus-visible {
   }
 }
 
+.darkModeButton {
+  align-self: flex-start;
+}
+
 .top-right {
-  position: absolute;
+  position: fixed;
   top: 0;
   right: 0;
+  z-index: 0;
 }
 
 .bottom-left {
-  position: absolute;
+  position: fixed;
   bottom: 0;
   left: 0;
 }
@@ -92,21 +100,30 @@ button:focus-visible {
   display: flex;
   flex-direction: column;
   align-items: center;
+  z-index: -1;
 }
 
 .quizAnswersContainer {
   display: flex;
   gap: 2em;
+  z-index: 1;
 }
 
 .answers {
   border: 2px solid #4D5B9E;
   border-radius: 13px;
-  padding: .3em;
+  padding: .5em;
   font-weight: 700;
   list-style-type: none;
   user-select: text;
   cursor: pointer;
+}
+
+.answers:focus {
+  outline: none;
+  background-color: #e0f7fa;
+  box-shadow: 0 0 5px 2px rgba(0, 150, 136, 0.5);
+  border: 2px solid #009688;
 }
 
 .answers.selected {
@@ -115,18 +132,21 @@ button:focus-visible {
 }
 
 .answers.correct {
-  background-color: green;
-  color: white;
+  background-color: #94D7A2;
+  border: none;
+  color: #293264;
 }
 
 .answers.incorrect {
-  background-color: red;
-  color: white;
+  background-color: #F8BCBC;
+  color: #293264;
+  border: none;
 }
 
 .answers.unselected {
-  background-color: lightgray;
-  color: white;
+  background-color: #F5F7FB;
+  color: #293264;
+  opacity: 50%;
 }
 
 .quizAnswersContainer {
@@ -136,6 +156,7 @@ button:focus-visible {
 
 h2 {
   max-width: 700px;
+  z-index: 1;
 }
 
 .selector-group {
@@ -163,4 +184,17 @@ h2 {
 
 .selector-group select:focus {
   border-color: #007bff;
+}
+
+.bottomBox {
+  display: flex;
+  gap: 1em;
+  align-items: center;
+  justify-content: center;
+}
+
+.score {
+  font-size: 1.4rem;
+  font-weight: 700;
+  z-index: 1;
 }

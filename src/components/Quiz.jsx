@@ -22,12 +22,20 @@ export default function Quiz({ question, answers, selectedAnswer, onAnswerSelect
             key={index}
             className={`answers ${getAnswerClass(answer)}`}
             onClick={() => onAnswerSelect(answer)}
+            tabIndex={0}
+            onKeyDown={(e) => {
+              if (e.key === 'Enter' || e.key === ' ') {
+                onAnswerSelect(answer)
+              }
+            }}
+            role="button"
+            aria-selected={selectedAnswer === answer}
           >
             {answer}
           </li>
         ))}
       </ul>
-      <hr style={{ width: "100%" }} />
+      <hr style={{ width: "100%", zIndex: '1' }} />
     </div>
 
   );
