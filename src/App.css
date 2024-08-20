@@ -474,16 +474,14 @@ body {
 }
 
 .leaderboard-button-unique {
-  background-color: #4CAF50;
-  /* A vibrant green color */
-  color: white;
+  background-color: #4CAF50 !important;
+  color: white !important;
   border: 2px solid #45a049;
   font-size: 1.1rem;
   font-weight: bold;
   text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.2);
   padding: 0.3125rem 0.625rem;
   border-radius: 0.3125rem;
-  /* Keeping the original border radius */
   cursor: pointer;
   transition: all 0.3s ease;
   height: 2.5rem;
@@ -504,7 +502,6 @@ body {
 /* Dark mode styles for the leaderboard button */
 .darkMode .leaderboard-button-unique {
   background-color: #66bb6a;
-  /* Lighter green for dark mode */
   color: #1a1a1a;
   border-color: #81c784;
   text-shadow: 1px 1px 2px rgba(255, 255, 255, 0.2);
@@ -641,15 +638,13 @@ body {
 
 .leaderboard-button-unique {
   background-color: #4CAF50;
-  /* A vibrant green color */
   color: white;
   border: 2px solid #45a049;
   font-size: 1.1rem;
   font-weight: bold;
   text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.2);
-  padding: 0.5rem 1rem;
-  border-radius: 25px;
-  /* Rounded corners */
+  padding: 0.3125rem 0.625rem;
+  border-radius: 0.3125rem;
   cursor: pointer;
   transition: all 0.3s ease;
   height: 2.5rem;
@@ -670,7 +665,6 @@ body {
 /* Dark mode styles for the leaderboard button */
 .darkMode .leaderboard-button-unique {
   background-color: #66bb6a;
-  /* Lighter green for dark mode */
   color: #1a1a1a;
   border-color: #81c784;
   text-shadow: 1px 1px 2px rgba(255, 255, 255, 0.2);
@@ -678,4 +672,44 @@ body {
 
 .darkMode .leaderboard-button-unique:hover {
   background-color: #81c784;
+}
+
+.success-message {
+  color: #4CAF50;
+  font-size: 1rem;
+  margin-bottom: 1rem;
+  text-align: center;
+}
+
+.welcome-message {
+  background-color: #4CAF50;
+  color: white;
+  padding: 10px;
+  text-align: center;
+  position: fixed;
+  top: 60px;
+  left: 0;
+  right: 0;
+  z-index: 1000;
+  animation: fadeIn 0.5s, fadeOut 0.5s 4.5s;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes fadeOut {
+  from {
+    opacity: 1;
+  }
+
+  to {
+    opacity: 0;
+  }
 }

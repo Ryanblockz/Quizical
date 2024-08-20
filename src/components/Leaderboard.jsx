@@ -1,23 +1,27 @@
 import React, { useState, useEffect } from 'react';
+import { rtdb } from '../firebase';
+import { ref, onValue, query, orderByChild, limitToLast } from "firebase/database";
 
 function Leaderboard({ user }) {
     const [leaderboardData, setLeaderboardData] = useState([]);
 
     useEffect(() => {
-        // Fetch leaderboard data here
-        fetchLeaderboardData();
-    }, []);
+        const leaderboardRef = query(ref(rtdb, 'users'), orderByChild('perfectStreaks'), limitToLast(10));
+        const unsubscribe = onValue(leaderboardRef, (snapshot) => {
+            const data = snapshot.val();
+            if (data) {
+                const sortedData = Object.entries(data)
+                    .map(([uid, userData]) => ({
+                        uid,
+                        ...userData
+                    }))
+                    .sort((a, b) => b.perfectStreaks - a.perfectStreaks);
+                setLeaderboardData(sortedData);
+            }
+        });
 
-    const fetchLeaderboardData = async () => {
-        // TODO: Implement fetching leaderboard data from your database
-        // For now, we'll use mock data
-        const mockData = [
-            { username: 'User1', perfectStreaks: 5, bestTime: 115 },
-            { username: 'User2', perfectStreaks: 3, bestTime: 118 },
-            // ... more mock data
-        ];
-        setLeaderboardData(mockData);
-    };
+        return () => unsubscribe();
+    }, []);
 
     return (
         <div className="leaderboard-container">
@@ -33,11 +37,11 @@ function Leaderboard({ user }) {
                 </thead>
                 <tbody>
                     {leaderboardData.map((entry, index) => (
-                        <tr key={index} className={user && entry.username === user.displayName ? 'current-user' : ''}>
+                        <tr key={entry.uid} className={user && entry.uid === user.uid ? 'current-user' : ''}>
                             <td>{index + 1}</td>
                             <td>{entry.username}</td>
                             <td>{entry.perfectStreaks}</td>
-                            <td>{entry.bestTime}</td>
+                            <td>{entry.bestTime || 'N/A'}</td>
                         </tr>
                     ))}
                 </tbody>

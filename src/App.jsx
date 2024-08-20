@@ -3,9 +3,10 @@ import './App.css'
 import { decode } from "html-entities"
 import Quiz from "./components/Quiz"
 import Auth from "./components/Auth"
-import { auth } from './firebase'
+import { auth, rtdb } from './firebase'
 import { onAuthStateChanged, signOut } from "firebase/auth"
 import Leaderboard from './components/Leaderboard.jsx'
+import { ref, update } from "firebase/database";
 
 export default function App() {
 
@@ -51,6 +52,7 @@ export default function App() {
   const [perfectStreaks, setPerfectStreaks] = useState(0)
   const [bestTime, setBestTime] = useState(null)
   const [showLeaderboard, setShowLeaderboard] = useState(false)
+  const [isNewUser, setIsNewUser] = useState(false)
 
   useEffect(() => {
     document.querySelector('html').style.filter = colorMode === "dark" ? "invert(100%) hue-rotate(180deg)" : "";
@@ -75,6 +77,10 @@ export default function App() {
 
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
+      if (currentUser && !user) {
+        setIsNewUser(true);
+        setTimeout(() => setIsNewUser(false), 5000); // Reset after 5 seconds
+      }
       setUser(currentUser);
     });
     return () => unsubscribe();
@@ -120,7 +126,6 @@ export default function App() {
         if (!bestTime || currentTime < bestTime) {
           setBestTime(currentTime);
         }
-        // TODO: Update user's score in the database
         updateUserScore(user.uid, perfectStreaks + 1, currentTime);
       } else {
         setPerfectStreaks(0);
@@ -136,9 +141,17 @@ export default function App() {
   }
 
   const updateUserScore = async (userId, streaks, time) => {
-    // TODO: Implement updating user score in your database
-    console.log(`Updating score for user ${userId}: ${streaks} streaks, ${time} ms`);
-  }
+    try {
+      const userRef = ref(rtdb, `users/${userId}`);
+      await update(userRef, {
+        perfectStreaks: streaks,
+        bestTime: time < (user.bestTime || Infinity) ? time : user.bestTime
+      });
+      console.log(`Updated score for user ${userId}: ${streaks} streaks, ${time} ms`);
+    } catch (error) {
+      console.error("Error updating user score:", error);
+    }
+  };
 
   const formatTime = (milliseconds) => {
     const totalSeconds = Math.floor(milliseconds / 1000)
@@ -263,6 +276,11 @@ export default function App() {
           {user && <SignOutButton />}
         </div>
       </div>
+      {isNewUser && (
+        <div className="welcome-message">
+          Welcome, {user?.displayName || 'new user'}! Ready to start quizzing?
+        </div>
+      )}
       {showLeaderboard ? (
         <Leaderboard user={user} />
       ) : (
