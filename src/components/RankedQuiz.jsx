@@ -115,15 +115,17 @@ function RankedQuiz({ user, difficulty, setDifficulty, setIsRankedMode }) {
 
     const renderSetup = () => (
         <div className="ranked-setup">
-            <h2>Ranked Quiz</h2>
-            <p>You will have 3 minutes to answer 30 questions. Your score and time will be recorded for the leaderboard.</p>
-            <select value={difficulty} onChange={(e) => setDifficulty(e.target.value)}>
-                <option value="easy">Easy</option>
-                <option value="medium">Medium</option>
-                <option value="hard">Hard</option>
-            </select>
-            <button onClick={startRankedQuiz} className="ranked-start-button">Start Ranked Quiz</button>
-            <button onClick={() => setIsRankedMode(false)} className="back-button">Back to Main Menu</button>
+            <button onClick={() => setIsRankedMode(false)} className="back-button">Main Menu</button>
+            <div className="ranked-content">
+                <h1>Ranked Quiz</h1>
+                <p>You will have 3 minutes to answer 30 questions. Your score and time will be recorded for the leaderboard.</p>
+                <select value={difficulty} onChange={(e) => setDifficulty(e.target.value)}>
+                    <option value="easy">Easy</option>
+                    <option value="medium">Medium</option>
+                    <option value="hard">Hard</option>
+                </select>
+                <button onClick={startRankedQuiz} className="ranked-start-button">Start Quiz</button>
+            </div>
         </div>
     );
 

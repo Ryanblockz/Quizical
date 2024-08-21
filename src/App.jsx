@@ -198,12 +198,14 @@ export default function App() {
   );
 
   const LeaderboardButton = () => (
-    <button
-      onClick={toggleLeaderboard}
-      className={`modeButton leaderboard-button-unique ${colorMode === "dark" ? "darkMode" : ""}`}
-    >
-      Leaderboard
-    </button>
+    user && (
+      <button
+        onClick={toggleLeaderboard}
+        className={`modeButton leaderboard-button-unique ${colorMode === "dark" ? "darkMode" : ""}`}
+      >
+        Leaderboard
+      </button>
+    )
   );
 
   const quizSetup = (
