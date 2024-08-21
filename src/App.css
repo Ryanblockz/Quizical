@@ -345,6 +345,33 @@ body {
   /* Add any specific styles for RankedQuiz buttons here if needed */
 }
 
+@media (max-width: 375px) {
+  .answers {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    grid-gap: 10px;
+  }
+
+  .answer-button {
+    width: 100%;
+    height: auto;
+    min-height: 44px;
+    font-size: 0.8rem;
+    padding: 5px;
+    margin: 0;
+  }
+
+  .question {
+    font-size: 0.9rem;
+    margin-bottom: 10px;
+  }
+
+  .ranked-quiz .question,
+  .ranked-quiz .answers {
+    padding: 5px;
+  }
+}
+
 /* Base styles for mobile devices (375px and up) */
 @media screen and (min-width: 23.4375em) {
   #root {

@@ -261,8 +261,20 @@ export default function App() {
             <p className='time'>Time taken: {formatTime(elapsedTime)}</p>
           </>
         )}
-        <div>
-          <button onClick={handleSubmit}>{submitted ? 'Play New Game' : 'Submit Quiz'}</button>
+        <div className="button-container" style={{ display: 'flex', justifyContent: 'center', gap: '0.5em' }}>
+          <button
+            onClick={handleSubmit}
+            style={{ flex: 1, minWidth: '140px', whiteSpace: 'nowrap' }}
+          >
+            {submitted ? 'Play New Game' : 'Submit Quiz'}
+          </button>
+          <button
+            onClick={() => setStartQuiz(false)}
+            className="exit-button"
+            style={{ flex: 1, minWidth: '140px', whiteSpace: 'nowrap' }}
+          >
+            Exit Quiz
+          </button>
         </div>
       </div>
     </>
@@ -274,7 +286,7 @@ export default function App() {
 
   return (
     <div className="app-container">
-      {!isRankedMode && (
+      {!isRankedMode && !startQuiz && (
         <div className="topButtons">
           <div className="leftButtons">
             <LeaderboardButton />
