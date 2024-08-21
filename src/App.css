@@ -293,10 +293,10 @@ body {
 
 .card {
   display: flex;
-  gap: .5em;
+  gap: 1em;
+  /* This adds the gap between buttons */
   justify-content: center;
 }
-
 
 .card :nth-child(2) {
   background-color: #f14122;
@@ -305,9 +305,45 @@ body {
 .card button {
   position: relative;
   z-index: 3;
+  padding: 10px 20px;
+  font-size: 16px;
+  font-weight: bold;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s, transform 0.3s, box-shadow 0.3s;
 }
 
+/* Style for the Start Quiz button (first button in the card) */
+.card button:first-child {
+  background-color: #4D5B9E;
+  color: white;
+}
 
+.card button:first-child:hover {
+  background-color: #3A4674;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+/* Style for the Ranked button (last button in the card) */
+.card button:last-child {
+  background-color: #D32F2F;
+  /* Red color for the Ranked button */
+  color: white;
+}
+
+.card button:last-child:hover {
+  background-color: #B71C1C;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+/* Ensure these styles don't affect the RankedQuiz buttons */
+.ranked-setup button,
+.ranked-quiz button {
+  /* Add any specific styles for RankedQuiz buttons here if needed */
+}
 
 /* Base styles for mobile devices (375px and up) */
 @media screen and (min-width: 23.4375em) {
@@ -763,38 +799,298 @@ body {
   z-index: 1000;
 }
 
+/* Responsive styles for ranked quiz */
+@media (max-width: 768px) {
+  .ranked-quiz {
+    padding: 10px;
+  }
+
+  .ranked-quiz .timer.fixed-timer {
+    font-size: 1.5em;
+    padding: 5px;
+  }
+
+  .ranked-quiz .question {
+    font-size: 1rem;
+    margin-bottom: 10px;
+  }
+
+  .ranked-quiz .answers {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .ranked-quiz .answer-button {
+    font-size: 0.9rem;
+    padding: 8px;
+    margin-bottom: 5px;
+  }
+
+  .ranked-quiz .bottomBox {
+    margin-top: 10px;
+  }
+
+  .ranked-quiz .submit-button,
+  .ranked-quiz .exit-button {
+    font-size: 0.9rem;
+    padding: 8px 16px;
+  }
+
+  .ranked-quiz .score {
+    font-size: 1rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .ranked-quiz .timer.fixed-timer {
+    font-size: 1.2em;
+  }
+
+  .ranked-quiz .question {
+    font-size: 0.9rem;
+  }
+
+  .ranked-quiz .answer-button {
+    font-size: 0.8rem;
+    padding: 6px;
+  }
+
+  .ranked-quiz .submit-button,
+  .ranked-quiz .exit-button {
+    font-size: 0.8rem;
+    padding: 6px 12px;
+  }
+}
+
+/* Additional styles for very small screens */
+@media (max-width: 375px) {
+  #root {
+    padding: 1rem;
+    padding-top: 3.375rem;
+  }
+
+  .ranked-quiz {
+    padding: 5px;
+  }
+
+  .ranked-quiz .timer.fixed-timer {
+    font-size: 0.9em;
+    padding: 2px;
+  }
+
+  .ranked-quiz .question {
+    font-size: 0.75rem;
+    margin-bottom: 5px;
+  }
+
+  .ranked-quiz .answers {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .ranked-quiz .answer-button {
+    font-size: 0.7rem;
+    padding: 4px;
+    margin-bottom: 3px;
+    white-space: normal;
+    height: auto;
+    min-height: 44px;
+  }
+
+  .ranked-quiz .submit-button,
+  .ranked-quiz .exit-button {
+    font-size: 0.7rem;
+    padding: 4px 8px;
+  }
+
+  .ranked-quiz .score {
+    font-size: 0.8rem;
+  }
+
+  /* Prevent horizontal overflow */
+  .ranked-quiz,
+  .ranked-quiz .question,
+  .ranked-quiz .answers,
+  .ranked-quiz .answer-button,
+  .ranked-quiz .bottomBox {
+    max-width: 100%;
+    box-sizing: border-box;
+    word-wrap: break-word;
+    overflow-wrap: break-word;
+  }
+
+  /* Adjust top buttons for very small screens */
+  .topButtons {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 5px;
+  }
+
+  .leftButtons,
+  .rightButtons {
+    width: 100%;
+    justify-content: space-between;
+  }
+
+  .modeButton {
+    font-size: 0.7rem;
+    padding: 4px 8px;
+    height: auto;
+    min-height: 30px;
+  }
+
+  /* Adjust ranked setup for very small screens */
+  .ranked-setup {
+    padding: 10px;
+  }
+
+  .ranked-content h1 {
+    font-size: 1.2rem;
+  }
+
+  .ranked-content p {
+    font-size: 0.8rem;
+  }
+
+  .ranked-setup select,
+  .ranked-start-button {
+    width: 100%;
+    max-width: 200px;
+    font-size: 0.8rem;
+  }
+
+  /* Adjust leaderboard for very small screens */
+  .leaderboard-container {
+    padding: 10px;
+  }
+
+  .leaderboard-container h2 {
+    font-size: 1.2rem;
+  }
+
+  .leaderboard-tabs button {
+    font-size: 0.7rem;
+    padding: 4px 8px;
+  }
+
+  .leaderboard-container table {
+    font-size: 0.7rem;
+  }
+
+  .leaderboard-container th,
+  .leaderboard-container td {
+    padding: 4px;
+  }
+}
+
+/* Responsive styles for ranked quiz */
+@media (max-width: 768px) {
+  .ranked-quiz {
+    padding: 10px;
+  }
+
+  .ranked-quiz .timer.fixed-timer {
+    font-size: 1.5em;
+    padding: 5px;
+  }
+
+  .ranked-quiz .question {
+    font-size: 1rem;
+    margin-bottom: 10px;
+  }
+
+  .ranked-quiz .answers {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .ranked-quiz .answer-button {
+    font-size: 0.9rem;
+    padding: 8px;
+    margin-bottom: 5px;
+  }
+
+  .ranked-quiz .bottomBox {
+    margin-top: 10px;
+  }
+
+  .ranked-quiz .submit-button,
+  .ranked-quiz .exit-button {
+    font-size: 0.9rem;
+    padding: 8px 16px;
+  }
+
+  .ranked-quiz .score {
+    font-size: 1rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .ranked-quiz .timer.fixed-timer {
+    font-size: 1.2em;
+  }
+
+  .ranked-quiz .question {
+    font-size: 0.9rem;
+  }
+
+  .ranked-quiz .answer-button {
+    font-size: 0.8rem;
+    padding: 6px;
+  }
+
+  .ranked-quiz .submit-button,
+  .ranked-quiz .exit-button {
+    font-size: 0.8rem;
+    padding: 6px 12px;
+  }
+}
+
+/* Additional styles for very small screens */
+@media (max-width: 375px) {
+  .ranked-quiz {
+    padding: 5px;
+  }
+
+  .ranked-quiz .timer.fixed-timer {
+    font-size: 1em;
+    padding: 3px;
+  }
+
+  .ranked-quiz .question {
+    font-size: 0.8rem;
+    margin-bottom: 5px;
+  }
+
+  .ranked-quiz .answer-button {
+    font-size: 0.7rem;
+    padding: 4px;
+    margin-bottom: 3px;
+  }
+
+  .ranked-quiz .submit-button,
+  .ranked-quiz .exit-button {
+    font-size: 0.7rem;
+    padding: 4px 8px;
+  }
+
+  .ranked-quiz .score {
+    font-size: 0.8rem;
+  }
+
+  /* Prevent horizontal overflow */
+  .ranked-quiz,
+  .ranked-quiz .question,
+  .ranked-quiz .answers,
+  .ranked-quiz .answer-button,
+  .ranked-quiz .bottomBox {
+    max-width: 100%;
+    box-sizing: border-box;
+  }
+}
+
 .ranked-setup h2 {
   margin-bottom: 20px;
-}
-
-.ranked-setup p {
-  margin-bottom: 20px;
-}
-
-.ranked-setup select {
-  margin-bottom: 20px;
-  padding: 10px;
-  font-size: 16px;
-  width: 200px;
-  /* Adjust as needed */
-}
-
-.ranked-start-button {
-  background-color: #D32F2F;
-  color: white;
-  border: none;
-  padding: 10px 20px;
-  border-radius: 5px;
-  cursor: pointer;
-  font-size: 16px;
-  font-weight: bold;
-  margin-top: 20px;
-  width: 200px;
-  /* Match the width of the select element */
-}
-
-.ranked-start-button:hover {
-  background-color: #B71C1C;
 }
 
 .ranked-setup p {

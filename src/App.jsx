@@ -123,6 +123,7 @@ export default function App() {
       const currentTime = Date.now() - startTime;
       setScore(currentScore);
       setSubmitted(true);
+      setElapsedTime(currentTime); // Use setElapsedTime instead of setEndTime
 
       if (currentScore === quizLength && currentTime <= 120000) { // 2 minutes in milliseconds
         setPerfectStreaks(prevStreaks => prevStreaks + 1);
@@ -134,12 +135,12 @@ export default function App() {
         setPerfectStreaks(0);
       }
     } else {
-      setStartQuiz(false)
-      setQuestions([])
-      setSelectedAnswers([])
-      setScore(0)
-      setStartTime(null)
-      setEndTime(null)
+      setStartQuiz(false);
+      setQuestions([]);
+      setSelectedAnswers([]);
+      setScore(0);
+      setStartTime(null);
+      setElapsedTime(0); // Reset elapsedTime instead of endTime
     }
   }
 
