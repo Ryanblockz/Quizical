@@ -1,51 +1,93 @@
 import React, { useState, useEffect } from 'react';
+import { ref, get } from "firebase/database";
 import { rtdb } from '../firebase';
-import { ref, onValue, query, orderByChild, limitToLast } from "firebase/database";
 
 function Leaderboard({ user }) {
-    const [leaderboardData, setLeaderboardData] = useState([]);
+    const [leaderboardData, setLeaderboardData] = useState({});
+    const [selectedDifficulty, setSelectedDifficulty] = useState('easy');
 
     useEffect(() => {
-        const leaderboardRef = query(ref(rtdb, 'users'), orderByChild('perfectStreaks'), limitToLast(10));
-        const unsubscribe = onValue(leaderboardRef, (snapshot) => {
-            const data = snapshot.val();
-            if (data) {
-                const sortedData = Object.entries(data)
-                    .map(([uid, userData]) => ({
-                        uid,
-                        ...userData
-                    }))
-                    .sort((a, b) => b.perfectStreaks - a.perfectStreaks);
-                setLeaderboardData(sortedData);
-            }
-        });
-
-        return () => unsubscribe();
+        fetchLeaderboardData();
     }, []);
 
-    return (
-        <div className="leaderboard-container">
-            <h2>Leaderboard</h2>
+    const fetchLeaderboardData = async () => {
+        const leaderboardRef = ref(rtdb, 'leaderboard');
+        const leaderboardSnapshot = await get(leaderboardRef);
+
+        const leaderboard = { easy: [], medium: [], hard: [] };
+
+        if (leaderboardSnapshot.exists()) {
+            const leaderboardData = leaderboardSnapshot.val();
+            ['easy', 'medium', 'hard'].forEach(difficulty => {
+                if (leaderboardData[difficulty]) {
+                    Object.entries(leaderboardData[difficulty]).forEach(([uid, entry]) => {
+                        if (entry.score > 0) {
+                            leaderboard[difficulty].push({
+                                username: entry.username,
+                                score: entry.score,
+                                time: entry.time || 0
+                            });
+                        }
+                    });
+                }
+            });
+        }
+
+        // Sort leaderboards for each difficulty
+        ['easy', 'medium', 'hard'].forEach(difficulty => {
+            leaderboard[difficulty].sort((a, b) => b.score - a.score || a.time - b.time);
+        });
+
+        setLeaderboardData(leaderboard);
+    };
+
+    const renderLeaderboard = () => {
+        const currentLeaderboard = leaderboardData[selectedDifficulty] || [];
+        return (
             <table>
                 <thead>
                     <tr>
                         <th>Rank</th>
                         <th>Username</th>
-                        <th>Perfect Streaks</th>
-                        <th>Best Time (seconds)</th>
+                        <th>Score</th>
+                        <th>Time</th>
                     </tr>
                 </thead>
                 <tbody>
-                    {leaderboardData.map((entry, index) => (
-                        <tr key={entry.uid} className={user && entry.uid === user.uid ? 'current-user' : ''}>
+                    {currentLeaderboard.map((entry, index) => (
+                        <tr key={index} className={entry.username === user?.displayName ? 'current-user' : ''}>
                             <td>{index + 1}</td>
                             <td>{entry.username}</td>
-                            <td>{entry.perfectStreaks}</td>
-                            <td>{entry.bestTime || 'N/A'}</td>
+                            <td>{entry.score}</td>
+                            <td>{formatTime(entry.time)}</td>
                         </tr>
                     ))}
                 </tbody>
             </table>
+        );
+    };
+
+    const formatTime = (seconds) => {
+        const minutes = Math.floor(seconds / 60);
+        const remainingSeconds = seconds % 60;
+        return `${minutes}:${remainingSeconds.toString().padStart(2, '0')}`;
+    };
+
+    return (
+        <div className="leaderboard-container">
+            <h2>Leaderboard</h2>
+            <div className="leaderboard-tabs">
+                {['easy', 'medium', 'hard'].map(difficulty => (
+                    <button
+                        key={difficulty}
+                        onClick={() => setSelectedDifficulty(difficulty)}
+                        className={selectedDifficulty === difficulty ? 'active' : ''}
+                    >
+                        {difficulty.charAt(0).toUpperCase() + difficulty.slice(1)}
+                    </button>
+                ))}
+            </div>
+            {renderLeaderboard()}
         </div>
     );
 }

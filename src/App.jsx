@@ -7,6 +7,7 @@ import { auth, rtdb } from './firebase'
 import { onAuthStateChanged, signOut } from "firebase/auth"
 import Leaderboard from './components/Leaderboard.jsx'
 import { ref, update } from "firebase/database";
+import RankedQuiz from "./components/RankedQuiz";
 
 export default function App() {
 
@@ -53,6 +54,8 @@ export default function App() {
   const [bestTime, setBestTime] = useState(null)
   const [showLeaderboard, setShowLeaderboard] = useState(false)
   const [isNewUser, setIsNewUser] = useState(false)
+  const [isRankedMode, setIsRankedMode] = useState(false)
+  const [rankedDifficulty, setRankedDifficulty] = useState("easy")
 
   useEffect(() => {
     document.querySelector('html').style.filter = colorMode === "dark" ? "invert(100%) hue-rotate(180deg)" : "";
@@ -214,7 +217,7 @@ export default function App() {
           {user && <SignOutButton />}
         </div>
       </div>
-      <h1>Quizzical</h1>
+      <h1>Quizey</h1>
       {renderSelector("Select Category:", "category-select", selectedCategory,
         (e) => setSelectedCategory(e.target.value),
         categories.map(category => ({ value: category.id, text: category.name })))}
@@ -227,6 +230,7 @@ export default function App() {
       <p>Fancy yourself a brain? Click the button to find out</p>
       <div className="card">
         <button onClick={() => setStartQuiz(true)}>Start Quiz</button>
+        <button onClick={() => setIsRankedMode(true)}>Ranked</button>
       </div>
     </>
   )
@@ -267,15 +271,17 @@ export default function App() {
 
   return (
     <div className="app-container">
-      <div className="topButtons">
-        <div className="leftButtons">
-          <LeaderboardButton />
+      {!isRankedMode && (
+        <div className="topButtons">
+          <div className="leftButtons">
+            <LeaderboardButton />
+          </div>
+          <div className="rightButtons">
+            <DarkModeToggle />
+            {user && <SignOutButton />}
+          </div>
         </div>
-        <div className="rightButtons">
-          <DarkModeToggle />
-          {user && <SignOutButton />}
-        </div>
-      </div>
+      )}
       {isNewUser && (
         <div className="welcome-message">
           Welcome, {user?.displayName || 'new user'}! Ready to start quizzing?
@@ -287,7 +293,16 @@ export default function App() {
         !user ? (
           <Auth setUser={setUser} />
         ) : (
-          startQuiz ? quizContent : quizSetup
+          isRankedMode ? (
+            <RankedQuiz
+              user={user}
+              difficulty={rankedDifficulty}
+              setDifficulty={setRankedDifficulty}
+              setIsRankedMode={setIsRankedMode}
+            />
+          ) : (
+            startQuiz ? quizContent : quizSetup
+          )
         )
       )}
     </div>
