@@ -15,7 +15,7 @@ export default function Quiz({ question, answers, selectedAnswer, onAnswerSelect
 
   return (
     <div className="quiz">
-      <h2>{question}</h2>
+      <h2 className='question'>{question}</h2>
       <ul className="quizAnswersContainer">
         {answers.map((answer, index) => (
           <li
@@ -37,6 +37,5 @@ export default function Quiz({ question, answers, selectedAnswer, onAnswerSelect
       </ul>
       <hr style={{ width: "100%", zIndex: '1' }} />
     </div>
-
   );
 }

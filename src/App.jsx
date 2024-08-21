@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react'
 import './App.css'
+import './QuizResponsive.css'  // Add this line
 import { decode } from "html-entities"
 import Quiz from "./components/Quiz"
 import Auth from "./components/Auth"
@@ -185,7 +186,7 @@ export default function App() {
 
   const DarkModeToggle = () => (
     <button
-      className={`modeButton darkModeButton ${colorMode === "dark" ? "darkMode" : "lightMode"}`}
+      className={`modeButton darkness darkModeButton ${colorMode === "dark" ? "darkMode" : "lightMode"}`}
       onClick={() => setColorMode(prev => prev === "dark" ? "light" : "dark")}
     >
       {colorMode === "dark" ? "Light Mode" : "Dark Mode"}
@@ -293,7 +294,7 @@ export default function App() {
           </div>
           <div className="rightButtons">
             <DarkModeToggle />
-            {user && <SignOutButton />}
+            {/* {user && <SignOutButton />} */}
           </div>
         </div>
       )}

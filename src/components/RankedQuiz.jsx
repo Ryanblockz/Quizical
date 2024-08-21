@@ -117,7 +117,7 @@ function RankedQuiz({ user, difficulty, setDifficulty, setIsRankedMode }) {
         <div className="ranked-setup">
             <button onClick={() => setIsRankedMode(false)} className="back-button">Main Menu</button>
             <div className="ranked-content">
-                <h1>Ranked Quiz</h1>
+                <h2>Ranked Quiz</h2>
                 <p>You will have 3 minutes to answer 30 questions. Your score and time will be recorded for the leaderboard.</p>
                 <select value={difficulty} onChange={(e) => setDifficulty(e.target.value)}>
                     <option value="easy">Easy</option>

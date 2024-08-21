@@ -339,39 +339,6 @@ body {
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
 }
 
-/* Ensure these styles don't affect the RankedQuiz buttons */
-.ranked-setup button,
-.ranked-quiz button {
-  /* Add any specific styles for RankedQuiz buttons here if needed */
-}
-
-@media (max-width: 375px) {
-  .answers {
-    display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    grid-gap: 10px;
-  }
-
-  .answer-button {
-    width: 100%;
-    height: auto;
-    min-height: 44px;
-    font-size: 0.8rem;
-    padding: 5px;
-    margin: 0;
-  }
-
-  .question {
-    font-size: 0.9rem;
-    margin-bottom: 10px;
-  }
-
-  .ranked-quiz .question,
-  .ranked-quiz .answers {
-    padding: 5px;
-  }
-}
-
 /* Base styles for mobile devices (375px and up) */
 @media screen and (min-width: 23.4375em) {
   #root {
@@ -742,14 +709,14 @@ body {
   padding: 8px 16px;
   margin: 0 4px;
   border: none;
-  background-color: #f0f0f0;
+
   cursor: pointer;
   border-radius: 4px;
   transition: background-color 0.3s, color 0.3s;
 }
 
 .leaderboard-tabs button.active {
-  background-color: #4D5B9E;
+  background-color: #0e7932;
   color: white;
 }
 
@@ -1008,6 +975,18 @@ body {
   .leaderboard-container td {
     padding: 4px;
   }
+
+  .quizAnswersContainer {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 0.5em;
+  }
+
+  .answers {
+    width: 100%;
+    font-size: 0.7rem;
+    padding: 0.4em;
+  }
 }
 
 /* Responsive styles for ranked quiz */
@@ -1114,6 +1093,18 @@ body {
     max-width: 100%;
     box-sizing: border-box;
   }
+
+  .quizAnswersContainer {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 0.5em;
+  }
+
+  .answers {
+    width: 100%;
+    font-size: 0.7rem;
+    padding: 0.4em;
+  }
 }
 
 .ranked-setup h2 {
@@ -1148,4 +1139,33 @@ body {
 
 .ranked-start-button:hover {
   background-color: #B71C1C;
+}
+
+/* Add this at the end of your existing CSS */
+
+@media (max-width: 480px) {
+  .quiz {
+    width: 100%;
+    padding: 0.5em;
+  }
+
+  .quiz h2 {
+    font-size: 1rem;
+    margin-bottom: 1em;
+  }
+
+  .quizAnswersContainer {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-gap: 0.5em;
+    width: 100%;
+  }
+
+  .answers {
+    width: 100%;
+    font-size: 0.8rem;
+    padding: 0.5em;
+    margin: 0;
+    box-sizing: border-box;
+  }
 }
