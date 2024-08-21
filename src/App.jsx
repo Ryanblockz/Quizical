@@ -1,6 +1,6 @@
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useCallback, useRef } from 'react'
 import './App.css'
-import './QuizResponsive.css'  // Add this line
+import './QuizResponsive.css'
 import { decode } from "html-entities"
 import Quiz from "./components/Quiz"
 import Auth from "./components/Auth"
@@ -11,7 +11,6 @@ import { ref, update } from "firebase/database";
 import RankedQuiz from "./components/RankedQuiz";
 
 export default function App() {
-
   const categories = [
     { id: 9, name: 'General Knowledge' },
     { id: 10, name: 'Entertainment: Books' },
@@ -48,7 +47,6 @@ export default function App() {
   const [quizLength, setQuizLength] = useState(5)
   const [difficulty, setDifficulty] = useState("easy")
   const [colorMode, setColorMode] = useState("light")
-  const [startTime, setStartTime] = useState(null)
   const [elapsedTime, setElapsedTime] = useState(0)
   const [user, setUser] = useState(null)
   const [perfectStreaks, setPerfectStreaks] = useState(0)
@@ -57,6 +55,10 @@ export default function App() {
   const [isNewUser, setIsNewUser] = useState(false)
   const [isRankedMode, setIsRankedMode] = useState(false)
   const [rankedDifficulty, setRankedDifficulty] = useState("easy")
+  const [questionsLoaded, setQuestionsLoaded] = useState(false)
+
+  const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
+  const timerRef = useRef(null)
 
   useEffect(() => {
     document.querySelector('html').style.filter = colorMode === "dark" ? "invert(100%) hue-rotate(180deg)" : "";
@@ -64,26 +66,26 @@ export default function App() {
 
   useEffect(() => {
     if (startQuiz) {
+      setQuestionsLoaded(false)
       fetchQuizData()
     }
   }, [startQuiz])
 
   useEffect(() => {
-    let interval
     if (startQuiz && !submitted) {
-      setStartTime(Date.now())
-      interval = setInterval(() => {
-        setElapsedTime(Date.now() - startTime)
-      }, 1000)
+      timerRef.current = setInterval(() => {
+        setElapsedTime(prevTime => prevTime + 1);
+      }, 1000);
+
+      return () => clearInterval(timerRef.current);
     }
-    return () => clearInterval(interval)
-  }, [startQuiz, submitted, startTime])
+  }, [startQuiz, submitted]);
 
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
       if (currentUser && !user) {
         setIsNewUser(true);
-        setTimeout(() => setIsNewUser(false), 5000); // Reset after 5 seconds
+        setTimeout(() => setIsNewUser(false), 5000);
       }
       setUser(currentUser);
     });
@@ -104,6 +106,7 @@ export default function App() {
       setQuestions(questions)
       setSelectedAnswers(new Array(questions.length).fill(null))
       setSubmitted(false)
+      setQuestionsLoaded(true)
     } catch (error) {
       console.log("Error fetching data:", error)
     }
@@ -112,38 +115,21 @@ export default function App() {
   const shuffleArray = (array) => array.sort(() => Math.random() - 0.5)
 
   const handleAnswerSelect = (index, answer) => {
-    setSelectedAnswers(prev => prev.map((item, i) => i === index ? answer : item))
+    setSelectedAnswers(prev => {
+      const newAnswers = [...prev];
+      newAnswers[index] = answer;
+      return newAnswers;
+    });
+
+    if (currentQuestionIndex < questions.length - 1) {
+      setCurrentQuestionIndex(prevIndex => prevIndex + 1);
+    } else {
+      handleSubmit();
+    }
   }
 
   const calculateScore = () => selectedAnswers.reduce((score, answer, index) =>
     answer === questions[index].correctAnswer ? score + 1 : score, 0)
-
-  const handleSubmit = () => {
-    if (!submitted) {
-      const currentScore = calculateScore();
-      const currentTime = Date.now() - startTime;
-      setScore(currentScore);
-      setSubmitted(true);
-      setElapsedTime(currentTime); // Use setElapsedTime instead of setEndTime
-
-      if (currentScore === quizLength && currentTime <= 120000) { // 2 minutes in milliseconds
-        setPerfectStreaks(prevStreaks => prevStreaks + 1);
-        if (!bestTime || currentTime < bestTime) {
-          setBestTime(currentTime);
-        }
-        updateUserScore(user.uid, perfectStreaks + 1, currentTime);
-      } else {
-        setPerfectStreaks(0);
-      }
-    } else {
-      setStartQuiz(false);
-      setQuestions([]);
-      setSelectedAnswers([]);
-      setScore(0);
-      setStartTime(null);
-      setElapsedTime(0); // Reset elapsedTime instead of endTime
-    }
-  }
 
   const updateUserScore = async (userId, streaks, time) => {
     try {
@@ -158,12 +144,33 @@ export default function App() {
     }
   };
 
-  const formatTime = (milliseconds) => {
-    const totalSeconds = Math.floor(milliseconds / 1000)
-    const minutes = Math.floor(totalSeconds / 60)
-    const seconds = totalSeconds % 60
-    return `${minutes}:${seconds.toString().padStart(2, '0')}`
-  }
+  const handleSubmit = useCallback((isTimeUp = false) => {
+    if (!submitted) {
+      const currentScore = calculateScore();
+      setScore(currentScore);
+      setSubmitted(true);
+      clearInterval(timerRef.current);
+
+      if (currentScore === quizLength && elapsedTime <= 120) {
+        setPerfectStreaks(prevStreaks => prevStreaks + 1);
+        if (!bestTime || elapsedTime < bestTime) {
+          setBestTime(elapsedTime);
+        }
+        updateUserScore(user.uid, perfectStreaks + 1, elapsedTime);
+      } else {
+        setPerfectStreaks(0);
+      }
+    }
+    if (isTimeUp) {
+      setElapsedTime(180);
+    }
+  }, [submitted, calculateScore, elapsedTime, quizLength, user, perfectStreaks, bestTime, updateUserScore]);
+
+  const formatTime = (seconds) => {
+    const minutes = Math.floor(seconds / 60);
+    const remainingSeconds = seconds % 60;
+    return `${minutes}:${remainingSeconds.toString().padStart(2, '0')}`;
+  };
 
   const renderSelector = (label, id, value, onChange, options) => (
     <div className="selector-group" key={id}>
@@ -244,40 +251,57 @@ export default function App() {
       <div className="timer fixed-timer">
         Time: {formatTime(elapsedTime)}
       </div>
-      {questions.map((quiz, index) => (
-        <Quiz
-          key={index}
-          question={quiz.question}
-          answers={quiz.answers}
-          correctAnswer={quiz.correctAnswer}
-          selectedAnswer={selectedAnswers[index]}
-          onAnswerSelect={(answer) => handleAnswerSelect(index, answer)}
-          submitted={submitted}
-        />
-      ))}
-      <div className='bottomBox'>
-        {submitted && (
-          <>
-            <p className='score'>You scored {score}/{quizLength} correct answers.</p>
-            <p className='time'>Time taken: {formatTime(elapsedTime)}</p>
-          </>
-        )}
-        <div className="button-container" style={{ display: 'flex', justifyContent: 'center', gap: '0.5em' }}>
-          <button
-            onClick={handleSubmit}
-            style={{ flex: 1, minWidth: '140px', whiteSpace: 'nowrap' }}
-          >
-            {submitted ? 'Play New Game' : 'Submit Quiz'}
-          </button>
-          <button
-            onClick={() => setStartQuiz(false)}
-            className="exit-button"
-            style={{ flex: 1, minWidth: '140px', whiteSpace: 'nowrap' }}
-          >
-            Exit Quiz
-          </button>
+      {!submitted && questionsLoaded ? (
+        questions.length > 0 && currentQuestionIndex < questions.length && (
+          <Quiz
+            key={currentQuestionIndex}
+            question={questions[currentQuestionIndex].question}
+            answers={questions[currentQuestionIndex].answers}
+            correctAnswer={questions[currentQuestionIndex].correctAnswer}
+            selectedAnswer={selectedAnswers[currentQuestionIndex]}
+            onAnswerSelect={(answer) => handleAnswerSelect(currentQuestionIndex, answer)}
+            submitted={submitted}
+          />
+        )
+      ) : questionsLoaded ? (
+        <div className='quiz-results'>
+          <h2>Quiz Results</h2>
+          <p className='score'>You scored {score}/{quizLength} correct answers.</p>
+          <p className='time'>Time taken: {formatTime(elapsedTime)}</p>
+          {questions.map((question, index) => (
+            <Quiz
+              key={index}
+              question={question.question}
+              answers={question.answers}
+              correctAnswer={question.correctAnswer}
+              selectedAnswer={selectedAnswers[index]}
+              submitted={true}
+            />
+          ))}
+          <div className="button-container" style={{ display: 'flex', justifyContent: 'center', gap: '0.5em' }}>
+            <button
+              onClick={() => {
+                setStartQuiz(false);
+                setCurrentQuestionIndex(0);
+                setSelectedAnswers([]);
+                setSubmitted(false);
+                setScore(0);
+                setElapsedTime(0);
+              }}
+              style={{ flex: 1, minWidth: '140px', whiteSpace: 'nowrap' }}
+            >
+              Play New Game
+            </button>
+          </div>
         </div>
-      </div>
+      ) : (
+        <div>Loading questions...</div>
+      )}
+      {!submitted && questionsLoaded && (
+        <button onClick={() => handleSubmit()} className="submit-button">
+          Submit Quiz
+        </button>
+      )}
     </>
   )
 
@@ -294,7 +318,6 @@ export default function App() {
           </div>
           <div className="rightButtons">
             <DarkModeToggle />
-            {/* {user && <SignOutButton />} */}
           </div>
         </div>
       )}

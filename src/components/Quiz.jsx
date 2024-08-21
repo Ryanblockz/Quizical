@@ -1,7 +1,15 @@
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useRef } from 'react'
 import { decode } from "html-entities"
 
 export default function Quiz({ question, answers, selectedAnswer, onAnswerSelect, correctAnswer, submitted }) {
+  const questionRef = useRef(null);
+
+  useEffect(() => {
+    if (questionRef.current) {
+      questionRef.current.focus();
+    }
+  }, [question]);
+
   const getAnswerClass = (answer) => {
     if (submitted) {
       if (answer === correctAnswer) return 'correct'
@@ -15,7 +23,7 @@ export default function Quiz({ question, answers, selectedAnswer, onAnswerSelect
 
   return (
     <div className="quiz">
-      <h2 className='question'>{question}</h2>
+      <h2 className='question' ref={questionRef} tabIndex="-1">{question}</h2>
       <ul className="quizAnswersContainer">
         {answers.map((answer, index) => (
           <li
