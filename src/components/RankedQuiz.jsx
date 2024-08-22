@@ -190,9 +190,11 @@ function RankedQuiz({ user, difficulty, setDifficulty, setIsRankedMode }) {
                     )}
                     {submitted && (
                         <div className='quiz-results'>
-                            <h2>Quiz Results</h2>
-                            <p className='score'>You scored {score}/30 correct answers.</p>
-                            <p className='time'>Time taken: {formatTime(180 - timeLeft)}</p>
+                            <div className='quiz-results-container'>
+                                <h2>Quiz Results</h2>
+                                <p className='score'>You scored {score}/30 correct answers.</p>
+                                <p className='time'>Time taken: {formatTime(180 - timeLeft)}</p>
+                            </div>
                             {questions.map((question, index) => (
                                 <Quiz
                                     key={index}

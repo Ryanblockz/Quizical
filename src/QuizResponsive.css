@@ -8,6 +8,30 @@
         max-height: 100vh !important;
         width: 100% !important;
         max-width: 100vw !important;
+        margin: 0 !important;
+    }
+
+    .quiz-results-container {
+        display: flex;
+        flex-direction: column;
+
+    }
+
+    .quiz-results-container>h2,
+    p {
+        margin: 0 !important;
+        padding: 0 !important;
+
+    }
+
+    .welcome {
+        font-size: 1.4em !important;
+        margin: .8em auto !important;
+    }
+
+    .app-container {
+        margin-top: 10em !important;
+        height: 100vh;
     }
 
     .auth-container {
@@ -26,20 +50,15 @@
         padding: 10px;
     }
 
-    .quizAnswersContainer {
-        display: flex !important;
-        flex-direction: column !important;
-        gap: 10px;
-        width: 100%;
-    }
 
     .score {
         max-width: 60%;
         margin: 0 auto !important;
+
     }
 
     table {
-        scale: 80%;
+        scale: 150%;
         margin: 0 auto !important;
         margin-right: 20em !important;
     }
@@ -48,9 +67,22 @@
         display: flex !important;
         flex-direction: column !important;
         gap: 10px !important;
-        width: 48% !important;
+        width: 60% !important;
         padding: 0;
         box-shadow: none !important;
+
+    }
+
+    .quizAnswersContainer {
+        gap: 5px !important;
+    }
+
+    .quiz-results>h2 {
+        display: none;
+    }
+
+    .ranked-quiz {
+        padding: 0 !important;
     }
 
     .leaderboard-container h2 {
@@ -58,9 +90,13 @@
     }
 
     .leaderboard-tabs {
-        scale: 80%;
-        margin-right: 2em !important;
-        padding: 0 !important;
+        scale: 90%;
+        display: flex !important;
+        flex-direction: column !important;
+        gap: 10px !important;
+
+        margin-left: 1em !important;
+        margin-bottom: 3em !important;
     }
 
     .bottomBox {
@@ -84,7 +120,17 @@
         gap: 10px !important;
         margin: 0 auto !important;
         width: 60%;
-        margin-top: 2.5em !important;
+        margin-bottom: 2em !important;
+    }
+
+    .ranked-content>p {
+        margin-bottom: 2em !important;
+
+    }
+
+    .root {
+        margin: 0 !important;
+        padding: 0 !important;
     }
 
     h1,
@@ -106,6 +152,18 @@
 
     .question {
         max-width: 60%;
+    }
+
+    .noMargin {
+        margin: 0 !important;
+    }
+
+    .exit-button {
+        scale: 150% !important;
+        margin: auto !important;
+        margin-right: 2em !important;
+        padding: .5em 2em !important;
+        margin-bottom: 2em !important;
     }
 
     .answers {

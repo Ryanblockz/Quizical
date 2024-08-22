@@ -1,20 +1,20 @@
-import React, { useState, useEffect } from 'react';
-import { ref, get } from "firebase/database";
-import { rtdb } from '../firebase';
+import React, { useState, useEffect } from 'react'
+import { ref, get } from "firebase/database"
+import { rtdb } from '../firebase'
 
 function Leaderboard({ user }) {
-    const [leaderboardData, setLeaderboardData] = useState({});
-    const [selectedDifficulty, setSelectedDifficulty] = useState('easy');
+    const [leaderboardData, setLeaderboardData] = useState({})
+    const [selectedDifficulty, setSelectedDifficulty] = useState('easy')
 
     useEffect(() => {
-        fetchLeaderboardData();
-    }, []);
+        fetchLeaderboardData()
+    }, [])
 
     const fetchLeaderboardData = async () => {
-        const leaderboardRef = ref(rtdb, 'leaderboard');
-        const leaderboardSnapshot = await get(leaderboardRef);
+        const leaderboardRef = ref(rtdb, 'leaderboard')
+        const leaderboardSnapshot = await get(leaderboardRef)
 
-        const leaderboard = { easy: [], medium: [], hard: [] };
+        const leaderboard = { easy: [], medium: [], hard: [] }
 
         if (leaderboardSnapshot.exists()) {
             const leaderboardData = leaderboardSnapshot.val();
@@ -26,23 +26,23 @@ function Leaderboard({ user }) {
                                 username: entry.username,
                                 score: entry.score,
                                 time: entry.time || 0
-                            });
+                            })
                         }
-                    });
+                    })
                 }
-            });
+            })
         }
 
-        // Sort leaderboards for each difficulty
+
         ['easy', 'medium', 'hard'].forEach(difficulty => {
             leaderboard[difficulty].sort((a, b) => b.score - a.score || a.time - b.time);
-        });
+        })
 
         setLeaderboardData(leaderboard);
-    };
+    }
 
     const renderLeaderboard = () => {
-        const currentLeaderboard = leaderboardData[selectedDifficulty] || [];
+        const currentLeaderboard = leaderboardData[selectedDifficulty] || []
         return (
             <table>
                 <thead>
@@ -64,14 +64,14 @@ function Leaderboard({ user }) {
                     ))}
                 </tbody>
             </table>
-        );
-    };
+        )
+    }
 
     const formatTime = (seconds) => {
-        const minutes = Math.floor(seconds / 60);
-        const remainingSeconds = seconds % 60;
-        return `${minutes}:${remainingSeconds.toString().padStart(2, '0')}`;
-    };
+        const minutes = Math.floor(seconds / 60)
+        const remainingSeconds = seconds % 60
+        return `${minutes}:${remainingSeconds.toString().padStart(2, '0')}`
+    }
 
     return (
         <div className="leaderboard-container">
@@ -89,7 +89,7 @@ function Leaderboard({ user }) {
             </div>
             {renderLeaderboard()}
         </div>
-    );
+    )
 }
 
-export default Leaderboard;
+export default Leaderboard

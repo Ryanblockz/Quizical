@@ -22,6 +22,9 @@
   top: 0;
   left: 0;
   right: 0;
+  z-index: 1000;
+  background-color: rgba(255, 255, 255, 0.9);
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
 /* If you're using dark mode, add this to ensure visibility */
@@ -282,6 +285,21 @@ body {
   background-color: rgba(255, 255, 255, 0.9);
 }
 
+
+
+.quiz-results-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 60%;
+  margin: 0 auto;
+}
+
+.quiz-results-container>h2,
+p {
+  margin: 0;
+}
+
 /* Add styles for the quiz content */
 .quiz-setup,
 .quiz-content {
@@ -463,26 +481,47 @@ body {
 /* Add these new styles to your existing CSS */
 
 .topButtons {
-  position: fixed;
-  top: 0.625rem;
-  left: 0.625rem;
-  right: 0.625rem;
+  position: static;
   display: flex;
-  justify-content: space-between;
-  z-index: 1001;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.5rem;
+  margin-bottom: 2rem;
+  padding: 1rem;
 }
 
-.leftButtons {
-  display: flex;
-  gap: 0.625rem;
-}
-
+.leftButtons,
 .rightButtons {
   display: flex;
-  gap: 0.625rem;
+  flex-direction: row;
+  justify-content: center;
+  gap: 0.5rem;
+  width: 100%;
 }
 
-.modeButton {
+.modeButton,
+.leaderboard-button-unique {
+  width: auto;
+  min-width: 6.25rem;
+  max-width: none;
+  margin: 0.25rem;
+}
+
+@media (min-width: 768px) {
+  .topButtons {
+    flex-direction: row;
+    justify-content: space-between;
+  }
+
+  .leftButtons,
+  .rightButtons {
+    width: auto;
+  }
+}
+
+.modeButton,
+.signOutButton,
+.leaderboard-button {
   padding: 0.3125rem 0.625rem;
   border-radius: 0.3125rem;
   cursor: pointer;
@@ -861,6 +900,8 @@ body {
   #root {
     padding: 1rem;
     padding-top: 3.375rem;
+    max-width: 100vw;
+    overflow-x: hidden;
   }
 
   .ranked-quiz {
@@ -916,76 +957,66 @@ body {
   /* Adjust top buttons for very small screens */
   .topButtons {
     flex-direction: column;
-    align-items: flex-start;
-    gap: 5px;
+    align-items: center;
+    gap: 0.5rem;
+    position: static;
+    margin-bottom: 1rem;
   }
 
   .leftButtons,
   .rightButtons {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
     width: 100%;
-    justify-content: space-between;
   }
 
-  .modeButton {
-    font-size: 0.7rem;
-    padding: 4px 8px;
-    height: auto;
-    min-height: 30px;
-  }
-
-  /* Adjust ranked setup for very small screens */
-  .ranked-setup {
-    padding: 10px;
-  }
-
-  .ranked-content h1 {
-    font-size: 1.2rem;
-  }
-
-  .ranked-content p {
-    font-size: 0.8rem;
-  }
-
-  .ranked-setup select,
-  .ranked-start-button {
+  .modeButton,
+  .leaderboard-button-unique {
     width: 100%;
-    max-width: 200px;
-    font-size: 0.8rem;
+    max-width: none;
   }
 
-  /* Adjust leaderboard for very small screens */
   .leaderboard-container {
-    padding: 10px;
-  }
-
-  .leaderboard-container h2 {
-    font-size: 1.2rem;
-  }
-
-  .leaderboard-tabs button {
-    font-size: 0.7rem;
-    padding: 4px 8px;
+    width: 90%;
+    margin: 1rem auto;
+    padding: 1rem;
+    top: 0;
   }
 
   .leaderboard-container table {
-    font-size: 0.7rem;
+    font-size: 0.8rem;
   }
 
   .leaderboard-container th,
   .leaderboard-container td {
-    padding: 4px;
+    padding: 0.3rem;
+  }
+
+  .leaderboard-tabs {
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+
+  .leaderboard-tabs button {
+    margin: 0.2rem;
+  }
+
+  .quiz h2 {
+    font-size: 1rem;
   }
 
   .quizAnswersContainer {
     display: grid;
     grid-template-columns: 1fr 1fr;
-    gap: 0.5em;
+    gap: 0.5rem;
   }
 
   .answers {
-    width: 100%;
-    font-size: 0.7rem;
-    padding: 0.4em;
+    font-size: 0.8rem;
+    padding: 0.5rem;
+    white-space: normal;
+    height: auto;
   }
 }
 
@@ -1107,6 +1138,7 @@ body {
   }
 }
 
+
 .ranked-setup h2 {
   margin-bottom: 20px;
 }
@@ -1168,4 +1200,10 @@ body {
     margin: 0;
     box-sizing: border-box;
   }
+}
+
+/* Add this to your existing styles */
+.app-container.noMargin {
+  margin-top: 0;
+  padding-top: 0;
 }

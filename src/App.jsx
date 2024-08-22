@@ -217,17 +217,20 @@ export default function App() {
     )
   );
 
+  const TopButtons = () => (
+    <div className="topButtons">
+      <div className="leftButtons">
+        {user && <LeaderboardButton />}
+      </div>
+      <div className="rightButtons">
+        <DarkModeToggle />
+        {user && <SignOutButton />}
+      </div>
+    </div>
+  );
+
   const quizSetup = (
     <>
-      <div className="topButtons">
-        <div className="leftButtons">
-          <LeaderboardButton />
-        </div>
-        <div className="rightButtons">
-          <DarkModeToggle />
-          {user && <SignOutButton />}
-        </div>
-      </div>
       <h1>Quizey</h1>
       {renderSelector("Select Category:", "category-select", selectedCategory,
         (e) => setSelectedCategory(e.target.value),
@@ -238,7 +241,7 @@ export default function App() {
       {renderSelector("Select Difficulty:", "difficulty-select", difficulty,
         (e) => setDifficulty(e.target.value),
         [{ value: "easy", text: "Easy" }, { value: "medium", text: "Medium" }, { value: "hard", text: "Hard" }])}
-      <p>Fancy yourself a brain? Click the button to find out</p>
+      <p className="welcome">Your'e a wizard {user?.displayName || 'new user'}</p>
       <div className="card">
         <button onClick={() => setStartQuiz(true)}>Start Quiz</button>
         <button onClick={() => setIsRankedMode(true)}>Ranked</button>
@@ -251,57 +254,61 @@ export default function App() {
       <div className="timer fixed-timer">
         Time: {formatTime(elapsedTime)}
       </div>
-      {!submitted && questionsLoaded ? (
-        questions.length > 0 && currentQuestionIndex < questions.length && (
-          <Quiz
-            key={currentQuestionIndex}
-            question={questions[currentQuestionIndex].question}
-            answers={questions[currentQuestionIndex].answers}
-            correctAnswer={questions[currentQuestionIndex].correctAnswer}
-            selectedAnswer={selectedAnswers[currentQuestionIndex]}
-            onAnswerSelect={(answer) => handleAnswerSelect(currentQuestionIndex, answer)}
-            submitted={submitted}
-          />
-        )
-      ) : questionsLoaded ? (
-        <div className='quiz-results'>
-          <h2>Quiz Results</h2>
-          <p className='score'>You scored {score}/{quizLength} correct answers.</p>
-          <p className='time'>Time taken: {formatTime(elapsedTime)}</p>
-          {questions.map((question, index) => (
+      <div className="quiz-container">
+        {!submitted && questionsLoaded ? (
+          questions.length > 0 && currentQuestionIndex < questions.length && (
             <Quiz
-              key={index}
-              question={question.question}
-              answers={question.answers}
-              correctAnswer={question.correctAnswer}
-              selectedAnswer={selectedAnswers[index]}
-              submitted={true}
+              key={currentQuestionIndex}
+              question={questions[currentQuestionIndex].question}
+              answers={questions[currentQuestionIndex].answers}
+              correctAnswer={questions[currentQuestionIndex].correctAnswer}
+              selectedAnswer={selectedAnswers[currentQuestionIndex]}
+              onAnswerSelect={(answer) => handleAnswerSelect(currentQuestionIndex, answer)}
+              submitted={submitted}
             />
-          ))}
-          <div className="button-container" style={{ display: 'flex', justifyContent: 'center', gap: '0.5em' }}>
-            <button
-              onClick={() => {
-                setStartQuiz(false);
-                setCurrentQuestionIndex(0);
-                setSelectedAnswers([]);
-                setSubmitted(false);
-                setScore(0);
-                setElapsedTime(0);
-              }}
-              style={{ flex: 1, minWidth: '140px', whiteSpace: 'nowrap' }}
-            >
-              Play New Game
-            </button>
+          )
+        ) : questionsLoaded ? (
+          <div className='quiz-results'>
+            <div className='quiz-results-container'>
+              <h2>Quiz Results</h2>
+              <p className='score'>You scored {score}/{quizLength} correct answers.</p>
+              <p className='time'>Time taken: {formatTime(elapsedTime)}</p>
+            </div>
+            {questions.map((question, index) => (
+              <Quiz
+                key={index}
+                question={question.question}
+                answers={question.answers}
+                correctAnswer={question.correctAnswer}
+                selectedAnswer={selectedAnswers[index]}
+                submitted={true}
+              />
+            ))}
+            <div className="button-container" style={{ display: 'flex', justifyContent: 'center', gap: '0.5em' }}>
+              <button
+                onClick={() => {
+                  setStartQuiz(false);
+                  setCurrentQuestionIndex(0);
+                  setSelectedAnswers([]);
+                  setSubmitted(false);
+                  setScore(0);
+                  setElapsedTime(0);
+                }}
+                style={{ flex: 1, minWidth: '140px', whiteSpace: 'nowrap' }}
+              >
+                Play New Game
+              </button>
+            </div>
           </div>
-        </div>
-      ) : (
-        <div>Loading questions...</div>
-      )}
-      {!submitted && questionsLoaded && (
-        <button onClick={() => handleSubmit()} className="submit-button">
-          Submit Quiz
-        </button>
-      )}
+        ) : (
+          <div>Loading questions...</div>
+        )}
+        {!submitted && questionsLoaded && (
+          <button onClick={() => handleSubmit()} className="submit-button">
+            Submit Quiz
+          </button>
+        )}
+      </div>
     </>
   )
 
@@ -309,18 +316,17 @@ export default function App() {
     setShowLeaderboard(!showLeaderboard);
   };
 
+  const getContainerClassName = () => {
+    let className = "app-container";
+    if (!user || (!startQuiz && !isRankedMode)) {
+      className += " noMargin";
+    }
+    return className;
+  };
+
   return (
-    <div className="app-container">
-      {!isRankedMode && !startQuiz && (
-        <div className="topButtons">
-          <div className="leftButtons">
-            <LeaderboardButton />
-          </div>
-          <div className="rightButtons">
-            <DarkModeToggle />
-          </div>
-        </div>
-      )}
+    <div className={getContainerClassName()}>
+      {!isRankedMode && !startQuiz && <TopButtons />}
       {isNewUser && (
         <div className="welcome-message">
           Welcome, {user?.displayName || 'new user'}! Ready to start quizzing?
