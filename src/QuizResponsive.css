@@ -58,7 +58,7 @@
     }
 
     table {
-        scale: 150%;
+        scale: 100%;
         margin: 0 auto !important;
         margin-right: 20em !important;
     }
@@ -71,6 +71,11 @@
         padding: 0;
         box-shadow: none !important;
 
+    }
+
+    .leaderboardButton {
+        margin-right: 5em;
+        margin-top: .7em;
     }
 
     .quizAnswersContainer {
@@ -90,12 +95,11 @@
     }
 
     .leaderboard-tabs {
-        scale: 90%;
+        scale: 80%;
         display: flex !important;
         flex-direction: column !important;
         gap: 10px !important;
-
-        margin-left: 1em !important;
+        margin-top: 9em !important;
         margin-bottom: 3em !important;
     }
 
@@ -114,13 +118,14 @@
         margin: 0 auto !important;
     }
 
+    h1 {
+        margin-top: 3em !important;
+    }
+
     .topButtons {
-        display: grid !important;
-        grid-template-rows: 1fr !important;
-        gap: 10px !important;
-        margin: 0 auto !important;
-        width: 60%;
-        margin-bottom: 2em !important;
+        display: flex !important;
+        flex-direction: row !important;
+        margin-right: 2em !important;
     }
 
     .ranked-content>p {
