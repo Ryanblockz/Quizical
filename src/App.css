@@ -481,16 +481,16 @@ p {
 /* Add these new styles to your existing CSS */
 
 .topButtons {
+  position: fixed;
+  top: 10px;
+  right: 10px;
+  z-index: 1002;
   display: flex;
-  justify-content: space-between;
-  align-items: center;
-  width: 100%;
-  padding: 10px;
-  box-sizing: border-box;
+  gap: 10px;
 }
 
-.leftButtons,
-.rightButtons {
+
+.buttonGroup {
   display: flex;
   gap: 10px;
 }
@@ -501,20 +501,6 @@ p {
   cursor: pointer;
   font-weight: bold;
   transition: background-color 0.3s, color 0.3s;
-}
-
-.darkModeButton {
-  position: fixed;
-  top: 10px;
-  left: 10px;
-  z-index: 1002;
-}
-
-.leaderboardButton {
-  /* Add any specific styles for the leaderboard button here */
-}
-
-.modeButton {
   background-color: #f0f0f0;
   color: #333;
   border: 1px solid #ccc;
@@ -534,11 +520,1925 @@ p {
   background-color: #444;
 }
 
-.leaderboard-view .leaderboardButton {
+/* Remove the fixed positioning from darkModeButton */
+.darkModeButton {
+  /* position: fixed; */
+  /* top: 10px; */
+  /* left: 10px; */
+  /* z-index: 1002; */
+}
+
+/* Adjust the leaderboard view if needed */
+.leaderboard-view .topButtons {
+  right: 10px;
+  left: auto;
+}
+
+.dark-mode .google-e {
+  color: #F28B82;
+}
+
+body {
+  position: relative;
+}
+
+#root {
+  max-width: 80rem;
+  margin: 0 auto;
+  padding: 2rem;
+  padding-top: 4.375rem;
+  position: relative;
+  z-index: 1;
+}
+
+.timer {
+  font-size: 2em;
+  font-weight: 900;
+  text-align: center;
+  padding: 0.9375rem;
+  background-color: rgba(255, 255, 255, 0.9);
+  z-index: 1000;
+  box-shadow: 0 0.125rem 0.3125rem rgba(0, 0, 0, 0.1);
+}
+
+.fixed-timer {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 1000;
+  background-color: rgba(255, 255, 255, 0.9);
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+/* If you're using dark mode, add this to ensure visibility */
+.dark-mode .fixed-timer {
+  background-color: rgba(0, 0, 0, 0.9);
+  color: white;
+}
+
+/* ... existing styles ... */
+
+.auth-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 1.875rem;
+  border: 0.0625rem solid #ccc;
+  border-radius: 0.3125rem;
+  max-width: 25rem;
+  width: 90%;
+  margin: 0 auto;
+  margin-top: 3.125rem;
+  z-index: 2;
+  position: relative;
+  background-color: #F5F7FB;
+  color: #293264;
+}
+
+.auth-container input,
+.auth-container .password-input-container {
+  width: 100%;
+  margin-bottom: 0.9375rem;
+  box-sizing: border-box;
+}
+
+.auth-container input {
+  background-color: #F5F7FB;
+  color: #293264;
+  border: 0.0625rem solid #4D5B9E;
+  padding: 0.75rem 0.9375rem;
+  border-radius: 0.25rem;
+  font-size: 1rem;
+}
+
+.password-input-container {
+  position: relative;
+  width: 100%;
+  margin-bottom: 0.9375rem;
+}
+
+.password-input-container input {
+  width: 100%;
+  padding-right: 3.5rem;
+  box-sizing: border-box;
+  border: 0.0625rem solid #4D5B9E;
+}
+
+.toggle-password {
+  position: absolute;
+  right: 0.5rem;
+  top: 50%;
+  transform: translateY(-50%);
+  background: none;
+  border: none;
+  color: #4D5B9E;
+  cursor: pointer;
+  font-size: 0.75rem;
+  padding: 0.25rem 0.5rem;
+  height: auto;
+  min-height: auto;
+  line-height: 1;
+  margin: 0;
+}
+
+.toggle-password:hover {
+  text-decoration: underline;
+}
+
+.auth-container button {
+  width: 100%;
+  margin-bottom: 0.9375rem;
+  padding: 0.75rem 0.9375rem;
+  border: none;
+  border-radius: 0.25rem;
+  font-size: 1.125rem;
+  cursor: pointer;
+  transition: background-color 0.3s;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  line-height: 1.2;
+  min-height: 3.125rem;
+  box-sizing: border-box;
+}
+
+.auth-container .toggle-password {
+  width: auto;
+  min-height: auto;
+  margin-bottom: 0;
+  padding: 0.25rem 0.5rem;
+  font-size: 0.75rem;
+  line-height: 1;
+}
+
+.auth-container>h2 {
+  color: #293264;
+  font-size: 1.5rem;
+}
+
+.auth-container button[type="submit"] {
+  background-color: #4D5B9E;
+  color: #F5F7FB;
+  font-size: 1.25rem;
+  font-weight: bold;
+}
+
+.auth-container button[type="submit"]:hover {
+  background-color: #414e8c;
+}
+
+.auth-container button:not([type="submit"]) {
+  background-color: #f0f0f0;
+  color: #333;
+}
+
+.auth-container button:not([type="submit"]):hover {
+  background-color: #e0e0e0;
+}
+
+.auth-container p {
+  cursor: pointer;
+  color: #4D5B9E;
+  text-decoration: underline;
+  margin-top: 1.25rem;
+  font-size: 1rem;
+}
+
+.darkModeButton {
+  position: fixed;
+  top: 10px;
+  left: 10px;
+  z-index: 1002;
+  padding: 0.3125rem 0.625rem;
+  border-radius: 0.3125rem;
+  cursor: pointer;
+  font-weight: bold;
+  transition: background-color 0.3s, color 0.3s;
+}
+
+.darkModeButton.lightMode {
+  background-color: #333;
+  color: #fff;
+  border: 0.0625rem solid #666;
+}
+
+.darkModeButton.darkMode {
+  background-color: #f0f0f0;
+  color: #333;
+  font-weight: 900;
+  border: 0.0625rem solid #ccc;
+}
+
+/* Adjust hover effects */
+.darkModeButton.lightMode:hover {
+  background-color: #444;
+}
+
+.darkModeButton.darkMode:hover {
+  background-color: #e0e0e0;
+}
+
+.google-button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: #F5F7FB;
+  color: #293264;
+  border: 0.0625rem solid #4D5B9E;
+  font-size: 0.875rem;
+}
+
+.google-button .continue-with {
+  font-size: 0.75rem;
+  margin-right: 0.25rem;
+}
+
+.google-button .google-text {
+  font-size: 0.875rem;
+}
+
+.google-text span {
+  color: inherit;
+  font-size: 0.875rem;
+}
+
+.google-button:hover {
+  background-color: #e8eaf6;
+}
+
+.google-text {
+  font-weight: bold;
+  color: #4285F4;
+}
+
+/* Dark mode adjustments */
+.dark-mode .google-button {
+  background-color: #333;
+  color: #fff;
+  border-color: #666;
+}
+
+.dark-mode .google-button:hover {
+  background-color: #444;
+}
+
+.dark-mode .google-o1 {
+  color: #F28B82;
+}
+
+.dark-mode .google-o2 {
+  color: #FDD663;
+}
+
+.dark-mode .google-g {
+  color: #8AB4F8;
+}
+
+.dark-mode .google-l {
+  color: #81C995;
+}
+
+.dark-mode .google-e {
+  color: #F28B82;
+}
+
+body {
+  position: relative;
+}
+
+.bottom-left,
+.top-right {
+  position: fixed;
+  z-index: -1;
+}
+
+.bottom-left {
+  bottom: 0;
+  left: 0;
+}
+
+.top-right {
+  top: 0;
+  right: 0;
+}
+
+.auth-container {
+  position: relative;
+  z-index: 2;
+  background-color: rgba(255, 255, 255, 0.9);
+}
+
+
+
+.quiz-results-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 60%;
+  margin: 0 auto;
+}
+
+.quiz-results-container>h2,
+p {
+  margin: 0;
+}
+
+/* Add styles for the quiz content */
+.quiz-setup,
+.quiz-content {
+  position: relative;
+  z-index: 2;
+}
+
+/* Style for the Start Quiz button */
+
+.card {
+  display: flex;
+  gap: 1em;
+  /* This adds the gap between buttons */
+  justify-content: center;
+}
+
+.card :nth-child(2) {
+  background-color: #f14122;
+}
+
+.card button {
+  position: relative;
+  z-index: 3;
+  padding: 10px 20px;
+  font-size: 16px;
+  font-weight: bold;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s, transform 0.3s, box-shadow 0.3s;
+}
+
+/* Style for the Start Quiz button (first button in the card) */
+.card button:first-child {
+  background-color: #4D5B9E;
+  color: white;
+}
+
+.card button:first-child:hover {
+  background-color: #3A4674;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+/* Style for the Ranked button (last button in the card) */
+.card button:last-child {
+  background-color: #D32F2F;
+  /* Red color for the Ranked button */
+  color: white;
+}
+
+.card button:last-child:hover {
+  background-color: #B71C1C;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+/* Base styles for mobile devices (375px and up) */
+@media screen and (min-width: 23.4375em) {
+  #root {
+    padding: 1rem;
+    padding-top: 3.75rem;
+  }
+
+  .auth-container {
+    width: 95%;
+    padding: 1.25rem;
+    margin-top: 1.875rem;
+  }
+
+  .auth-container input,
+  .auth-container button {
+    font-size: 0.875rem;
+    padding: 0.625rem;
+  }
+
+  .auth-container>h2 {
+    font-size: 1.5rem;
+  }
+
+  .google-button {
+    font-size: 0.75rem;
+  }
+
+  .google-button .continue-with {
+    font-size: 0.625rem;
+  }
+
+  .google-button .google-text {
+    font-size: 0.75rem;
+  }
+
+  .bottom-left,
+  .top-right {
+    width: 40%;
+  }
+}
+
+/* Styles for tablets (768px and up) */
+@media screen and (min-width: 48em) {
+  #root {
+    padding: 1.5rem;
+    padding-top: 4.375rem;
+  }
+
+  .auth-container {
+    max-width: 28.125rem;
+    padding: 1.5625rem;
+  }
+
+  .auth-container input,
+  .auth-container button {
+    font-size: 1rem;
+    padding: 0.75rem;
+  }
+
+  .auth-container>h2 {
+    font-size: 1.75rem;
+  }
+
+  .google-button {
+    font-size: 0.875rem;
+  }
+
+  .google-button .continue-with {
+    font-size: 0.75rem;
+  }
+
+  .google-button .google-text {
+    font-size: 0.875rem;
+  }
+
+  .bottom-left,
+  .top-right {
+    width: 30%;
+  }
+}
+
+/* Styles for desktop (1024px and up) */
+@media screen and (min-width: 64em) {
+  #root {
+    padding: 2rem;
+    padding-top: 5rem;
+  }
+
+  .auth-container {
+    max-width: 31.25rem;
+    padding: 1.875rem;
+  }
+
+  .auth-container input,
+  .auth-container button {
+    font-size: 1.125rem;
+    padding: 0.9375rem;
+  }
+
+  .auth-container>h2 {
+    font-size: 2rem;
+  }
+
+  .google-button {
+    font-size: 1rem;
+  }
+
+  .google-button .continue-with {
+    font-size: 0.875rem;
+  }
+
+  .google-button .google-text {
+    font-size: 1rem;
+  }
+
+  .bottom-left,
+  .top-right {
+    width: 25%;
+  }
+}
+
+/* Add these new styles to your existing CSS */
+
+.topButtons {
   position: fixed;
   top: 10px;
   right: 10px;
   z-index: 1002;
+  display: flex;
+  gap: 10px;
+}
+
+.buttonGroup {
+  display: flex;
+  gap: 10px;
+}
+
+.modeButton {
+  padding: 5px 10px;
+  border-radius: 5px;
+  cursor: pointer;
+  font-weight: bold;
+  transition: background-color 0.3s, color 0.3s;
+  background-color: #f0f0f0;
+  color: #333;
+  border: 1px solid #ccc;
+}
+
+.modeButton:hover {
+  background-color: #e0e0e0;
+}
+
+.modeButton.darkMode {
+  background-color: #333;
+  color: #f0f0f0;
+  border-color: #666;
+}
+
+.modeButton.darkMode:hover {
+  background-color: #444;
+}
+
+/* Remove the fixed positioning from darkModeButton */
+.darkModeButton {
+  /* position: fixed; */
+  /* top: 10px; */
+  /* left: 10px; */
+  /* z-index: 1002; */
+}
+
+/* Adjust the leaderboard view if needed */
+.leaderboard-view .topButtons {
+  right: 10px;
+  left: auto;
+}
+
+.dark-mode .google-e {
+  color: #F28B82;
+}
+
+body {
+  position: relative;
+}
+
+#root {
+  max-width: 80rem;
+  margin: 0 auto;
+  padding: 2rem;
+  padding-top: 4.375rem;
+  position: relative;
+  z-index: 1;
+}
+
+.timer {
+  font-size: 2em;
+  font-weight: 900;
+  text-align: center;
+  padding: 0.9375rem;
+  background-color: rgba(255, 255, 255, 0.9);
+  z-index: 1000;
+  box-shadow: 0 0.125rem 0.3125rem rgba(0, 0, 0, 0.1);
+}
+
+.fixed-timer {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 1000;
+  background-color: rgba(255, 255, 255, 0.9);
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+/* If you're using dark mode, add this to ensure visibility */
+.dark-mode .fixed-timer {
+  background-color: rgba(0, 0, 0, 0.9);
+  color: white;
+}
+
+/* ... existing styles ... */
+
+.auth-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 1.875rem;
+  border: 0.0625rem solid #ccc;
+  border-radius: 0.3125rem;
+  max-width: 25rem;
+  width: 90%;
+  margin: 0 auto;
+  margin-top: 3.125rem;
+  z-index: 2;
+  position: relative;
+  background-color: #F5F7FB;
+  color: #293264;
+}
+
+.auth-container input,
+.auth-container .password-input-container {
+  width: 100%;
+  margin-bottom: 0.9375rem;
+  box-sizing: border-box;
+}
+
+.auth-container input {
+  background-color: #F5F7FB;
+  color: #293264;
+  border: 0.0625rem solid #4D5B9E;
+  padding: 0.75rem 0.9375rem;
+  border-radius: 0.25rem;
+  font-size: 1rem;
+}
+
+.password-input-container {
+  position: relative;
+  width: 100%;
+  margin-bottom: 0.9375rem;
+}
+
+.password-input-container input {
+  width: 100%;
+  padding-right: 3.5rem;
+  box-sizing: border-box;
+  border: 0.0625rem solid #4D5B9E;
+}
+
+.toggle-password {
+  position: absolute;
+  right: 0.5rem;
+  top: 50%;
+  transform: translateY(-50%);
+  background: none;
+  border: none;
+  color: #4D5B9E;
+  cursor: pointer;
+  font-size: 0.75rem;
+  padding: 0.25rem 0.5rem;
+  height: auto;
+  min-height: auto;
+  line-height: 1;
+  margin: 0;
+}
+
+.toggle-password:hover {
+  text-decoration: underline;
+}
+
+.auth-container button {
+  width: 100%;
+  margin-bottom: 0.9375rem;
+  padding: 0.75rem 0.9375rem;
+  border: none;
+  border-radius: 0.25rem;
+  font-size: 1.125rem;
+  cursor: pointer;
+  transition: background-color 0.3s;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  line-height: 1.2;
+  min-height: 3.125rem;
+  box-sizing: border-box;
+}
+
+.auth-container .toggle-password {
+  width: auto;
+  min-height: auto;
+  margin-bottom: 0;
+  padding: 0.25rem 0.5rem;
+  font-size: 0.75rem;
+  line-height: 1;
+}
+
+.auth-container>h2 {
+  color: #293264;
+  font-size: 1.5rem;
+}
+
+.auth-container button[type="submit"] {
+  background-color: #4D5B9E;
+  color: #F5F7FB;
+  font-size: 1.25rem;
+  font-weight: bold;
+}
+
+.auth-container button[type="submit"]:hover {
+  background-color: #414e8c;
+}
+
+.auth-container button:not([type="submit"]) {
+  background-color: #f0f0f0;
+  color: #333;
+}
+
+.auth-container button:not([type="submit"]):hover {
+  background-color: #e0e0e0;
+}
+
+.auth-container p {
+  cursor: pointer;
+  color: #4D5B9E;
+  text-decoration: underline;
+  margin-top: 1.25rem;
+  font-size: 1rem;
+}
+
+.darkModeButton {
+  position: fixed;
+  top: 10px;
+  left: 10px;
+  z-index: 1002;
+  padding: 0.3125rem 0.625rem;
+  border-radius: 0.3125rem;
+  cursor: pointer;
+  font-weight: bold;
+  transition: background-color 0.3s, color 0.3s;
+}
+
+.darkModeButton.lightMode {
+  background-color: #333;
+  color: #fff;
+  border: 0.0625rem solid #666;
+}
+
+.darkModeButton.darkMode {
+  background-color: #f0f0f0;
+  color: #333;
+  font-weight: 900;
+  border: 0.0625rem solid #ccc;
+}
+
+/* Adjust hover effects */
+.darkModeButton.lightMode:hover {
+  background-color: #444;
+}
+
+.darkModeButton.darkMode:hover {
+  background-color: #e0e0e0;
+}
+
+.google-button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: #F5F7FB;
+  color: #293264;
+  border: 0.0625rem solid #4D5B9E;
+  font-size: 0.875rem;
+}
+
+.google-button .continue-with {
+  font-size: 0.75rem;
+  margin-right: 0.25rem;
+}
+
+.google-button .google-text {
+  font-size: 0.875rem;
+}
+
+.google-text span {
+  color: inherit;
+  font-size: 0.875rem;
+}
+
+.google-button:hover {
+  background-color: #e8eaf6;
+}
+
+.google-text {
+  font-weight: bold;
+  color: #4285F4;
+}
+
+/* Dark mode adjustments */
+.dark-mode .google-button {
+  background-color: #333;
+  color: #fff;
+  border-color: #666;
+}
+
+.dark-mode .google-button:hover {
+  background-color: #444;
+}
+
+.dark-mode .google-o1 {
+  color: #F28B82;
+}
+
+.dark-mode .google-o2 {
+  color: #FDD663;
+}
+
+.dark-mode .google-g {
+  color: #8AB4F8;
+}
+
+.dark-mode .google-l {
+  color: #81C995;
+}
+
+.dark-mode .google-e {
+  color: #F28B82;
+}
+
+body {
+  position: relative;
+}
+
+.bottom-left,
+.top-right {
+  position: fixed;
+  z-index: -1;
+}
+
+.bottom-left {
+  bottom: 0;
+  left: 0;
+}
+
+.top-right {
+  top: 0;
+  right: 0;
+}
+
+.auth-container {
+  position: relative;
+  z-index: 2;
+  background-color: rgba(255, 255, 255, 0.9);
+}
+
+
+
+.quiz-results-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 60%;
+  margin: 0 auto;
+}
+
+.quiz-results-container>h2,
+p {
+  margin: 0;
+}
+
+/* Add styles for the quiz content */
+.quiz-setup,
+.quiz-content {
+  position: relative;
+  z-index: 2;
+}
+
+/* Style for the Start Quiz button */
+
+.card {
+  display: flex;
+  gap: 1em;
+  /* This adds the gap between buttons */
+  justify-content: center;
+}
+
+.card :nth-child(2) {
+  background-color: #f14122;
+}
+
+.card button {
+  position: relative;
+  z-index: 3;
+  padding: 10px 20px;
+  font-size: 16px;
+  font-weight: bold;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s, transform 0.3s, box-shadow 0.3s;
+}
+
+/* Style for the Start Quiz button (first button in the card) */
+.card button:first-child {
+  background-color: #4D5B9E;
+  color: white;
+}
+
+.card button:first-child:hover {
+  background-color: #3A4674;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+/* Style for the Ranked button (last button in the card) */
+.card button:last-child {
+  background-color: #D32F2F;
+  /* Red color for the Ranked button */
+  color: white;
+}
+
+.card button:last-child:hover {
+  background-color: #B71C1C;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+/* Base styles for mobile devices (375px and up) */
+@media screen and (min-width: 23.4375em) {
+  #root {
+    padding: 1rem;
+    padding-top: 3.75rem;
+  }
+
+  .auth-container {
+    width: 95%;
+    padding: 1.25rem;
+    margin-top: 1.875rem;
+  }
+
+  .auth-container input,
+  .auth-container button {
+    font-size: 0.875rem;
+    padding: 0.625rem;
+  }
+
+  .auth-container>h2 {
+    font-size: 1.5rem;
+  }
+
+  .google-button {
+    font-size: 0.75rem;
+  }
+
+  .google-button .continue-with {
+    font-size: 0.625rem;
+  }
+
+  .google-button .google-text {
+    font-size: 0.75rem;
+  }
+
+  .bottom-left,
+  .top-right {
+    width: 40%;
+  }
+}
+
+/* Styles for tablets (768px and up) */
+@media screen and (min-width: 48em) {
+  #root {
+    padding: 1.5rem;
+    padding-top: 4.375rem;
+  }
+
+  .auth-container {
+    max-width: 28.125rem;
+    padding: 1.5625rem;
+  }
+
+  .auth-container input,
+  .auth-container button {
+    font-size: 1rem;
+    padding: 0.75rem;
+  }
+
+  .auth-container>h2 {
+    font-size: 1.75rem;
+  }
+
+  .google-button {
+    font-size: 0.875rem;
+  }
+
+  .google-button .continue-with {
+    font-size: 0.75rem;
+  }
+
+  .google-button .google-text {
+    font-size: 0.875rem;
+  }
+
+  .bottom-left,
+  .top-right {
+    width: 30%;
+  }
+}
+
+/* Styles for desktop (1024px and up) */
+@media screen and (min-width: 64em) {
+  #root {
+    padding: 2rem;
+    padding-top: 5rem;
+  }
+
+  .auth-container {
+    max-width: 31.25rem;
+    padding: 1.875rem;
+  }
+
+  .auth-container input,
+  .auth-container button {
+    font-size: 1.125rem;
+    padding: 0.9375rem;
+  }
+
+  .auth-container>h2 {
+    font-size: 2rem;
+  }
+
+  .google-button {
+    font-size: 1rem;
+  }
+
+  .google-button .continue-with {
+    font-size: 0.875rem;
+  }
+
+  .google-button .google-text {
+    font-size: 1rem;
+  }
+
+  .bottom-left,
+  .top-right {
+    width: 25%;
+  }
+}
+
+/* Add these new styles to your existing CSS */
+
+.topButtons {
+  position: fixed;
+  top: 10px;
+  left: 10px;
+  z-index: 1002;
+  display: flex;
+  gap: 10px;
+}
+
+.buttonGroup {
+  display: flex;
+  gap: 10px;
+}
+
+.modeButton {
+  padding: 5px 10px;
+  border-radius: 5px;
+  cursor: pointer;
+  font-weight: bold;
+  transition: background-color 0.3s, color 0.3s;
+  background-color: #f0f0f0;
+  color: #333;
+  border: 1px solid #ccc;
+}
+
+.modeButton:hover {
+  background-color: #e0e0e0;
+}
+
+.modeButton.darkMode {
+  background-color: #333;
+  color: #f0f0f0;
+  border-color: #666;
+}
+
+.modeButton.darkMode:hover {
+  background-color: #444;
+}
+
+/* Remove the fixed positioning from darkModeButton */
+.darkModeButton {
+  /* position: fixed; */
+  /* top: 10px; */
+  /* left: 10px; */
+  /* z-index: 1002; */
+}
+
+/* Adjust the leaderboard view if needed */
+.leaderboard-view .topButtons {
+  right: 10px;
+  left: auto;
+}
+
+.dark-mode .google-e {
+  color: #F28B82;
+}
+
+body {
+  position: relative;
+}
+
+#root {
+  max-width: 80rem;
+  margin: 0 auto;
+  padding: 2rem;
+  padding-top: 4.375rem;
+  position: relative;
+  z-index: 1;
+}
+
+.timer {
+  font-size: 2em;
+  font-weight: 900;
+  text-align: center;
+  padding: 0.9375rem;
+  background-color: rgba(255, 255, 255, 0.9);
+  z-index: 1000;
+  box-shadow: 0 0.125rem 0.3125rem rgba(0, 0, 0, 0.1);
+}
+
+.fixed-timer {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 1000;
+  background-color: rgba(255, 255, 255, 0.9);
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+/* If you're using dark mode, add this to ensure visibility */
+.dark-mode .fixed-timer {
+  background-color: rgba(0, 0, 0, 0.9);
+  color: white;
+}
+
+/* ... existing styles ... */
+
+.auth-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 1.875rem;
+  border: 0.0625rem solid #ccc;
+  border-radius: 0.3125rem;
+  max-width: 25rem;
+  width: 90%;
+  margin: 0 auto;
+  margin-top: 3.125rem;
+  z-index: 2;
+  position: relative;
+  background-color: #F5F7FB;
+  color: #293264;
+}
+
+.auth-container input,
+.auth-container .password-input-container {
+  width: 100%;
+  margin-bottom: 0.9375rem;
+  box-sizing: border-box;
+}
+
+.auth-container input {
+  background-color: #F5F7FB;
+  color: #293264;
+  border: 0.0625rem solid #4D5B9E;
+  padding: 0.75rem 0.9375rem;
+  border-radius: 0.25rem;
+  font-size: 1rem;
+}
+
+.password-input-container {
+  position: relative;
+  width: 100%;
+  margin-bottom: 0.9375rem;
+}
+
+.password-input-container input {
+  width: 100%;
+  padding-right: 3.5rem;
+  box-sizing: border-box;
+  border: 0.0625rem solid #4D5B9E;
+}
+
+.toggle-password {
+  position: absolute;
+  right: 0.5rem;
+  top: 50%;
+  transform: translateY(-50%);
+  background: none;
+  border: none;
+  color: #4D5B9E;
+  cursor: pointer;
+  font-size: 0.75rem;
+  padding: 0.25rem 0.5rem;
+  height: auto;
+  min-height: auto;
+  line-height: 1;
+  margin: 0;
+}
+
+.toggle-password:hover {
+  text-decoration: underline;
+}
+
+.auth-container button {
+  width: 100%;
+  margin-bottom: 0.9375rem;
+  padding: 0.75rem 0.9375rem;
+  border: none;
+  border-radius: 0.25rem;
+  font-size: 1.125rem;
+  cursor: pointer;
+  transition: background-color 0.3s;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  line-height: 1.2;
+  min-height: 3.125rem;
+  box-sizing: border-box;
+}
+
+.auth-container .toggle-password {
+  width: auto;
+  min-height: auto;
+  margin-bottom: 0;
+  padding: 0.25rem 0.5rem;
+  font-size: 0.75rem;
+  line-height: 1;
+}
+
+.auth-container>h2 {
+  color: #293264;
+  font-size: 1.5rem;
+}
+
+.auth-container button[type="submit"] {
+  background-color: #4D5B9E;
+  color: #F5F7FB;
+  font-size: 1.25rem;
+  font-weight: bold;
+}
+
+.auth-container button[type="submit"]:hover {
+  background-color: #414e8c;
+}
+
+.auth-container button:not([type="submit"]) {
+  background-color: #f0f0f0;
+  color: #333;
+}
+
+.auth-container button:not([type="submit"]):hover {
+  background-color: #e0e0e0;
+}
+
+.auth-container p {
+  cursor: pointer;
+  color: #4D5B9E;
+  text-decoration: underline;
+  margin-top: 1.25rem;
+  font-size: 1rem;
+}
+
+.darkModeButton {
+  position: fixed;
+  top: 10px;
+  left: 10px;
+  z-index: 1002;
+  padding: 0.3125rem 0.625rem;
+  border-radius: 0.3125rem;
+  cursor: pointer;
+  font-weight: bold;
+  transition: background-color 0.3s, color 0.3s;
+}
+
+.darkModeButton.lightMode {
+  background-color: #333;
+  color: #fff;
+  border: 0.0625rem solid #666;
+}
+
+.darkModeButton.darkMode {
+  background-color: #f0f0f0;
+  color: #333;
+  font-weight: 900;
+  border: 0.0625rem solid #ccc;
+}
+
+/* Adjust hover effects */
+.darkModeButton.lightMode:hover {
+  background-color: #444;
+}
+
+.darkModeButton.darkMode:hover {
+  background-color: #e0e0e0;
+}
+
+.google-button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: #F5F7FB;
+  color: #293264;
+  border: 0.0625rem solid #4D5B9E;
+  font-size: 0.875rem;
+}
+
+.google-button .continue-with {
+  font-size: 0.75rem;
+  margin-right: 0.25rem;
+}
+
+.google-button .google-text {
+  font-size: 0.875rem;
+}
+
+.google-text span {
+  color: inherit;
+  font-size: 0.875rem;
+}
+
+.google-button:hover {
+  background-color: #e8eaf6;
+}
+
+.google-text {
+  font-weight: bold;
+  color: #4285F4;
+}
+
+/* Dark mode adjustments */
+.dark-mode .google-button {
+  background-color: #333;
+  color: #fff;
+  border-color: #666;
+}
+
+.dark-mode .google-button:hover {
+  background-color: #444;
+}
+
+.dark-mode .google-o1 {
+  color: #F28B82;
+}
+
+.dark-mode .google-o2 {
+  color: #FDD663;
+}
+
+.dark-mode .google-g {
+  color: #8AB4F8;
+}
+
+.dark-mode .google-l {
+  color: #81C995;
+}
+
+.dark-mode .google-e {
+  color: #F28B82;
+}
+
+body {
+  position: relative;
+}
+
+.bottom-left,
+.top-right {
+  position: fixed;
+  z-index: -1;
+}
+
+.bottom-left {
+  bottom: 0;
+  left: 0;
+}
+
+.top-right {
+  top: 0;
+  right: 0;
+}
+
+.auth-container {
+  position: relative;
+  z-index: 2;
+  background-color: rgba(255, 255, 255, 0.9);
+}
+
+
+
+.quiz-results-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 60%;
+  margin: 0 auto;
+}
+
+.quiz-results-container>h2,
+p {
+  margin: 0;
+}
+
+/* Add styles for the quiz content */
+.quiz-setup,
+.quiz-content {
+  position: relative;
+  z-index: 2;
+}
+
+/* Style for the Start Quiz button */
+
+.card {
+  display: flex;
+  gap: 1em;
+  /* This adds the gap between buttons */
+  justify-content: center;
+}
+
+.card :nth-child(2) {
+  background-color: #f14122;
+}
+
+.card button {
+  position: relative;
+  z-index: 3;
+  padding: 10px 20px;
+  font-size: 16px;
+  font-weight: bold;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s, transform 0.3s, box-shadow 0.3s;
+}
+
+/* Style for the Start Quiz button (first button in the card) */
+.card button:first-child {
+  background-color: #4D5B9E;
+  color: white;
+}
+
+.card button:first-child:hover {
+  background-color: #3A4674;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+/* Style for the Ranked button (last button in the card) */
+.card button:last-child {
+  background-color: #D32F2F;
+  /* Red color for the Ranked button */
+  color: white;
+}
+
+.card button:last-child:hover {
+  background-color: #B71C1C;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+/* Base styles for mobile devices (375px and up) */
+@media screen and (min-width: 23.4375em) {
+  #root {
+    padding: 1rem;
+    padding-top: 3.75rem;
+  }
+
+  .auth-container {
+    width: 95%;
+    padding: 1.25rem;
+    margin-top: 1.875rem;
+  }
+
+  .auth-container input,
+  .auth-container button {
+    font-size: 0.875rem;
+    padding: 0.625rem;
+  }
+
+  .auth-container>h2 {
+    font-size: 1.5rem;
+  }
+
+  .google-button {
+    font-size: 0.75rem;
+  }
+
+  .google-button .continue-with {
+    font-size: 0.625rem;
+  }
+
+  .google-button .google-text {
+    font-size: 0.75rem;
+  }
+
+  .bottom-left,
+  .top-right {
+    width: 40%;
+  }
+}
+
+/* Styles for tablets (768px and up) */
+@media screen and (min-width: 48em) {
+  #root {
+    padding: 1.5rem;
+    padding-top: 4.375rem;
+  }
+
+  .auth-container {
+    max-width: 28.125rem;
+    padding: 1.5625rem;
+  }
+
+  .auth-container input,
+  .auth-container button {
+    font-size: 1rem;
+    padding: 0.75rem;
+  }
+
+  .auth-container>h2 {
+    font-size: 1.75rem;
+  }
+
+  .google-button {
+    font-size: 0.875rem;
+  }
+
+  .google-button .continue-with {
+    font-size: 0.75rem;
+  }
+
+  .google-button .google-text {
+    font-size: 0.875rem;
+  }
+
+  .bottom-left,
+  .top-right {
+    width: 30%;
+  }
+}
+
+/* Styles for desktop (1024px and up) */
+@media screen and (min-width: 64em) {
+  #root {
+    padding: 2rem;
+    padding-top: 5rem;
+  }
+
+  .auth-container {
+    max-width: 31.25rem;
+    padding: 1.875rem;
+  }
+
+  .auth-container input,
+  .auth-container button {
+    font-size: 1.125rem;
+    padding: 0.9375rem;
+  }
+
+  .auth-container>h2 {
+    font-size: 2rem;
+  }
+
+  .google-button {
+    font-size: 1rem;
+  }
+
+  .google-button .continue-with {
+    font-size: 0.875rem;
+  }
+
+  .google-button .google-text {
+    font-size: 1rem;
+  }
+
+  .bottom-left,
+  .top-right {
+    width: 25%;
+  }
+}
+
+/* Add these new styles to your existing CSS */
+
+.topButtons {
+  position: fixed;
+  top: 10px;
+  left: 10px;
+  z-index: 1002;
+  display: flex;
+  gap: 10px;
+}
+
+.buttonGroup {
+  display: flex;
+  gap: 10px;
+}
+
+.modeButton {
+  padding: 5px 10px;
+  border-radius: 5px;
+  cursor: pointer;
+  font-weight: bold;
+  transition: background-color 0.3s, color 0.3s;
+  background-color: #f0f0f0;
+  color: #333;
+  border: 1px solid #ccc;
+}
+
+.modeButton:hover {
+  background-color: #e0e0e0;
+}
+
+.modeButton.darkMode {
+  background-color: #333;
+  color: #f0f0f0;
+  border-color: #666;
+}
+
+.modeButton.darkMode:hover {
+  background-color: #444;
+}
+
+/* Remove the fixed positioning from darkModeButton */
+.darkModeButton {
+  /* position: fixed; */
+  /* top: 10px; */
+  /* left: 10px; */
+  /* z-index: 1002; */
+}
+
+/* Adjust the leaderboard view if needed */
+.leaderboard-view .topButtons {
+  right: 10px;
+  left: auto;
+}
+
+.dark-mode .google-e {
+  color: #F28B82;
+}
+
+body {
+  position: relative;
+}
+
+.bottom-left,
+.top-right {
+  position: fixed;
+  z-index: -1;
+}
+
+.bottom-left {
+  bottom: 0;
+  left: 0;
+}
+
+.top-right {
+  top: 0;
+  right: 0;
+}
+
+.auth-container {
+  position: relative;
+  z-index: 2;
+  background-color: rgba(255, 255, 255, 0.9);
+}
+
+
+
+.quiz-results-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 60%;
+  margin: 0 auto;
+}
+
+.quiz-results-container>h2,
+p {
+  margin: 0;
+}
+
+/* Add styles for the quiz content */
+.quiz-setup,
+.quiz-content {
+  position: relative;
+  z-index: 2;
+}
+
+/* Style for the Start Quiz button */
+
+.card {
+  display: flex;
+  gap: 1em;
+  /* This adds the gap between buttons */
+  justify-content: center;
+}
+
+.card :nth-child(2) {
+  background-color: #f14122;
+}
+
+.card button {
+  position: relative;
+  z-index: 3;
+  padding: 10px 20px;
+  font-size: 16px;
+  font-weight: bold;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s, transform 0.3s, box-shadow 0.3s;
+}
+
+/* Style for the Start Quiz button (first button in the card) */
+.card button:first-child {
+  background-color: #4D5B9E;
+  color: white;
+}
+
+.card button:first-child:hover {
+  background-color: #3A4674;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+/* Style for the Ranked button (last button in the card) */
+.card button:last-child {
+  background-color: #D32F2F;
+  /* Red color for the Ranked button */
+  color: white;
+}
+
+.card button:last-child:hover {
+  background-color: #B71C1C;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+/* Base styles for mobile devices (375px and up) */
+@media screen and (min-width: 23.4375em) {
+  #root {
+    padding: 1rem;
+    padding-top: 3.75rem;
+  }
+
+  .auth-container {
+    width: 95%;
+    padding: 1.25rem;
+    margin-top: 1.875rem;
+  }
+
+  .auth-container input,
+  .auth-container button {
+    font-size: 0.875rem;
+    padding: 0.625rem;
+  }
+
+  .auth-container>h2 {
+    font-size: 1.5rem;
+  }
+
+  .google-button {
+    font-size: 0.75rem;
+  }
+
+  .google-button .continue-with {
+    font-size: 0.625rem;
+  }
+
+  .google-button .google-text {
+    font-size: 0.75rem;
+  }
+
+  .bottom-left,
+  .top-right {
+    width: 40%;
+  }
+}
+
+/* Styles for tablets (768px and up) */
+@media screen and (min-width: 48em) {
+  #root {
+    padding: 1.5rem;
+    padding-top: 4.375rem;
+  }
+
+  .auth-container {
+    max-width: 28.125rem;
+    padding: 1.5625rem;
+  }
+
+  .auth-container input,
+  .auth-container button {
+    font-size: 1rem;
+    padding: 0.75rem;
+  }
+
+  .auth-container>h2 {
+    font-size: 1.75rem;
+  }
+
+  .google-button {
+    font-size: 0.875rem;
+  }
+
+  .google-button .continue-with {
+    font-size: 0.75rem;
+  }
+
+  .google-button .google-text {
+    font-size: 0.875rem;
+  }
+
+  .bottom-left,
+  .top-right {
+    width: 30%;
+  }
+}
+
+/* Styles for desktop (1024px and up) */
+@media screen and (min-width: 64em) {
+  #root {
+    padding: 2rem;
+    padding-top: 5rem;
+  }
+
+  .auth-container {
+    max-width: 31.25rem;
+    padding: 1.875rem;
+  }
+
+  .auth-container input,
+  .auth-container button {
+    font-size: 1.125rem;
+    padding: 0.9375rem;
+  }
+
+  .auth-container>h2 {
+    font-size: 2rem;
+  }
+
+  .google-button {
+    font-size: 1rem;
+  }
+
+  .google-button .continue-with {
+    font-size: 0.875rem;
+  }
+
+  .google-button .google-text {
+    font-size: 1rem;
+  }
+
+  .bottom-left,
+  .top-right {
+    width: 25%;
+  }
+}
+
+/* Add these new styles to your existing CSS */
+
+.topButtons {
+  position: fixed;
+  top: 10px;
+  left: 10px;
+  z-index: 1002;
+  display: flex;
+  gap: 10px;
+}
+
+.buttonGroup {
+  display: flex;
+  gap: 10px;
+}
+
+.modeButton {
+  padding: 5px 10px;
+  border-radius: 5px;
+  cursor: pointer;
+  font-weight: bold;
+  transition: background-color 0.3s, color 0.3s;
+  background-color: #f0f0f0;
+  color: #333;
+  border: 1px solid #ccc;
+}
+
+.modeButton:hover {
+  background-color: #e0e0e0;
+}
+
+.modeButton.darkMode {
+  background-color: #333;
+  color: #f0f0f0;
+  border-color: #666;
+}
+
+.modeButton.darkMode:hover {
+  background-color: #444;
+}
+
+/* Remove the fixed positioning from darkModeButton */
+.darkModeButton {
+  /* position: fixed; */
+  /* top: 10px; */
+  /* left: 10px; */
+  /* z-index: 1002; */
+}
+
+/* Adjust the leaderboard view if needed */
+.leaderboard-view .topButtons {
+  right: 10px;
+  left: auto;
 }
 
 /* ... (rest of the styles remain the same) */
@@ -840,114 +2740,700 @@ p {
 
   .ranked-quiz .question {
     font-size: 0.8rem;
-    margin-bottom: 5px;
-  }
 
-  .ranked-quiz .answer-button {
-    font-size: 0.7rem;
-    padding: 4px;
-    margin-bottom: 3px;
-  }
+    .dark-mode .google-e {
+      color: #F28B82;
+    }
 
-  .ranked-quiz .submit-button,
-  .ranked-quiz .exit-button {
-    font-size: 0.7rem;
-    padding: 4px 8px;
-  }
+    body {
+      position: relative;
+    }
 
-  .ranked-quiz .score {
-    font-size: 0.8rem;
-  }
+    .bottom-left,
+    .top-right {
+      position: fixed;
+      z-index: -1;
+    }
 
-  /* Prevent horizontal overflow */
-  .ranked-quiz,
-  .ranked-quiz .question,
-  .ranked-quiz .answers,
-  .ranked-quiz .answer-button,
-  .ranked-quiz .bottomBox {
-    max-width: 100%;
-    box-sizing: border-box;
-  }
+    .bottom-left {
+      bottom: 0;
+      left: 0;
+    }
 
-  .quizAnswersContainer {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 0.5em;
-  }
+    .top-right {
+      top: 0;
+      right: 0;
+    }
 
-  .answers {
-    width: 100%;
-    font-size: 0.7rem;
-    padding: 0.4em;
-  }
-}
+    .auth-container {
+      position: relative;
+      z-index: 2;
+      background-color: rgba(255, 255, 255, 0.9);
+    }
 
 
-.ranked-setup h2 {
-  margin-bottom: 20px;
-}
 
-.ranked-setup p {
-  margin-bottom: 20px;
-}
+    .quiz-results-container {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      width: 60%;
+      margin: 0 auto;
+    }
 
-.ranked-setup select {
-  margin-bottom: 20px;
-  padding: 10px;
-  font-size: 16px;
-  width: 200px;
-  /* Adjust as needed */
-}
+    .quiz-results-container>h2,
+    p {
+      margin: 0;
+    }
 
-.ranked-start-button {
-  background-color: #D32F2F;
-  color: white;
-  border: none;
-  padding: 10px 20px;
-  border-radius: 5px;
-  cursor: pointer;
-  font-size: 16px;
-  font-weight: bold;
-  margin-top: 20px;
-  width: 200px;
-  /* Match the width of the select element */
-}
+    /* Add styles for the quiz content */
+    .quiz-setup,
+    .quiz-content {
+      position: relative;
+      z-index: 2;
+    }
 
-.ranked-start-button:hover {
-  background-color: #B71C1C;
-}
+    /* Style for the Start Quiz button */
 
-/* Add this at the end of your existing CSS */
+    .card {
+      display: flex;
+      gap: 1em;
+      /* This adds the gap between buttons */
+      justify-content: center;
+    }
 
-@media (max-width: 480px) {
-  .quiz {
-    width: 100%;
-    padding: 0.5em;
-  }
+    .card :nth-child(2) {
+      background-color: #f14122;
+    }
 
-  .quiz h2 {
-    font-size: 1rem;
-    margin-bottom: 1em;
-  }
+    .card button {
+      position: relative;
+      z-index: 3;
+      padding: 10px 20px;
+      font-size: 16px;
+      font-weight: bold;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      transition: background-color 0.3s, transform 0.3s, box-shadow 0.3s;
+    }
 
-  .quizAnswersContainer {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    grid-gap: 0.5em;
-    width: 100%;
-  }
+    /* Style for the Start Quiz button (first button in the card) */
+    .card button:first-child {
+      background-color: #4D5B9E;
+      color: white;
+    }
 
-  .answers {
-    width: 100%;
-    font-size: 0.8rem;
-    padding: 0.5em;
-    margin: 0;
-    box-sizing: border-box;
-  }
-}
+    .card button:first-child:hover {
+      background-color: #3A4674;
+      transform: translateY(-2px);
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    }
 
-/* Add this to your existing styles */
-.app-container.noMargin {
-  margin-top: 0;
-  padding-top: 0;
-}
+    /* Style for the Ranked button (last button in the card) */
+    .card button:last-child {
+      background-color: #D32F2F;
+      /* Red color for the Ranked button */
+      color: white;
+    }
+
+    .card button:last-child:hover {
+      background-color: #B71C1C;
+      transform: translateY(-2px);
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    }
+
+    /* Base styles for mobile devices (375px and up) */
+    @media screen and (min-width: 23.4375em) {
+      #root {
+        padding: 1rem;
+        padding-top: 3.75rem;
+      }
+
+      .auth-container {
+        width: 95%;
+        padding: 1.25rem;
+        margin-top: 1.875rem;
+      }
+
+      .auth-container input,
+      .auth-container button {
+        font-size: 0.875rem;
+        padding: 0.625rem;
+      }
+
+      .auth-container>h2 {
+        font-size: 1.5rem;
+      }
+
+      .google-button {
+        font-size: 0.75rem;
+      }
+
+      .google-button .continue-with {
+        font-size: 0.625rem;
+      }
+
+      .google-button .google-text {
+        font-size: 0.75rem;
+      }
+
+      .bottom-left,
+      .top-right {
+        width: 40%;
+      }
+    }
+
+    /* Styles for tablets (768px and up) */
+    @media screen and (min-width: 48em) {
+      #root {
+        padding: 1.5rem;
+        padding-top: 4.375rem;
+      }
+
+      .auth-container {
+        max-width: 28.125rem;
+        padding: 1.5625rem;
+      }
+
+      .auth-container input,
+      .auth-container button {
+        font-size: 1rem;
+        padding: 0.75rem;
+      }
+
+      .auth-container>h2 {
+        font-size: 1.75rem;
+      }
+
+      .google-button {
+        font-size: 0.875rem;
+      }
+
+      .google-button .continue-with {
+        font-size: 0.75rem;
+      }
+
+      .google-button .google-text {
+        font-size: 0.875rem;
+      }
+
+      .bottom-left,
+      .top-right {
+        width: 30%;
+      }
+    }
+
+    /* Styles for desktop (1024px and up) */
+    @media screen and (min-width: 64em) {
+      #root {
+        padding: 2rem;
+        padding-top: 5rem;
+      }
+
+      .auth-container {
+        max-width: 31.25rem;
+        padding: 1.875rem;
+      }
+
+      .auth-container input,
+      .auth-container button {
+        font-size: 1.125rem;
+        padding: 0.9375rem;
+      }
+
+      .auth-container>h2 {
+        font-size: 2rem;
+      }
+
+      .google-button {
+        font-size: 1rem;
+      }
+
+      .google-button .continue-with {
+        font-size: 0.875rem;
+      }
+
+      .google-button .google-text {
+        font-size: 1rem;
+      }
+
+      .bottom-left,
+      .top-right {
+        width: 25%;
+      }
+    }
+
+    /* Add these new styles to your existing CSS */
+
+    .topButtons {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      width: 100%;
+      padding: 10px;
+      box-sizing: border-box;
+    }
+
+    .leftButtons,
+    .rightButtons {
+      display: flex;
+      gap: 10px;
+    }
+
+    .modeButton {
+      padding: 5px 10px;
+      border-radius: 5px;
+      cursor: pointer;
+      font-weight: bold;
+      transition: background-color 0.3s, color 0.3s;
+    }
+
+    .darkModeButton {
+      position: fixed;
+      top: 10px;
+      left: 10px;
+      z-index: 1002;
+    }
+
+    .leaderboardButton {
+      /* Add any specific styles for the leaderboard button here */
+    }
+
+    .modeButton {
+      background-color: #f0f0f0;
+      color: #333;
+      border: 1px solid #ccc;
+    }
+
+    .modeButton:hover {
+      background-color: #e0e0e0;
+    }
+
+    .modeButton.darkMode {
+      background-color: #333;
+      color: #f0f0f0;
+      border-color: #666;
+    }
+
+    .modeButton.darkMode:hover {
+      background-color: #444;
+    }
+
+    .leaderboard-view .leaderboardButton {
+      position: fixed;
+      top: 10px;
+      right: 10px;
+      z-index: 1002;
+    }
+
+    /* ... (rest of the styles remain the same) */
+
+    .ranked-setup {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      padding: 20px;
+    }
+
+    .ranked-content {
+      text-align: center;
+      max-width: 600px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    .ranked-content>p {
+      font-size: 1.2rem;
+      margin: 0;
+      font-weight: 600;
+    }
+
+    .back-button {
+      position: fixed;
+      top: 10px;
+      left: 10px;
+      z-index: 1000;
+    }
+
+    /* Responsive styles for ranked quiz */
+    @media (max-width: 768px) {
+      .ranked-quiz {
+        padding: 10px;
+      }
+
+      .ranked-quiz .timer.fixed-timer {
+        font-size: 1.5em;
+        padding: 5px;
+      }
+
+      .ranked-quiz .question {
+        font-size: 1rem;
+        margin-bottom: 10px;
+      }
+
+      .ranked-quiz .answers {
+        display: flex;
+        flex-direction: column;
+      }
+
+      .ranked-quiz .answer-button {
+        font-size: 0.9rem;
+        padding: 8px;
+        margin-bottom: 5px;
+      }
+
+      .ranked-quiz .bottomBox {
+        margin-top: 10px;
+      }
+
+      .ranked-quiz .submit-button,
+      .ranked-quiz .exit-button {
+        font-size: 0.9rem;
+        padding: 8px 16px;
+      }
+
+      .ranked-quiz .score {
+        font-size: 1rem;
+      }
+    }
+
+    @media (max-width: 480px) {
+      .ranked-quiz .timer.fixed-timer {
+        font-size: 1.2em;
+      }
+
+      .ranked-quiz .question {
+        font-size: 0.9rem;
+      }
+
+      .ranked-quiz .answer-button {
+        font-size: 0.8rem;
+        padding: 6px;
+      }
+
+      .ranked-quiz .submit-button,
+      .ranked-quiz .exit-button {
+        font-size: 0.8rem;
+        padding: 6px 12px;
+      }
+    }
+
+    /* Additional styles for very small screens */
+    @media (max-width: 375px) {
+      #root {
+        padding: 1rem;
+        padding-top: 3.375rem;
+        max-width: 100vw;
+        overflow-x: hidden;
+      }
+
+      .ranked-quiz {
+        padding: 5px;
+      }
+
+      .ranked-quiz .timer.fixed-timer {
+        font-size: 0.9em;
+        padding: 2px;
+      }
+
+      .ranked-quiz .question {
+        font-size: 0.75rem;
+        margin-bottom: 5px;
+      }
+
+      .ranked-quiz .answers {
+        display: flex;
+        flex-direction: column;
+      }
+
+      .ranked-quiz .answer-button {
+        font-size: 0.7rem;
+        padding: 4px;
+        margin-bottom: 3px;
+        white-space: normal;
+        height: auto;
+        min-height: 44px;
+      }
+
+      .ranked-quiz .submit-button,
+      .ranked-quiz .exit-button {
+        font-size: 0.7rem;
+        padding: 4px 8px;
+      }
+
+      .ranked-quiz .score {
+        font-size: 0.8rem;
+      }
+
+      /* Prevent horizontal overflow */
+      .ranked-quiz,
+      .ranked-quiz .question,
+      .ranked-quiz .answers,
+      .ranked-quiz .answer-button,
+      .ranked-quiz .bottomBox {
+        max-width: 100%;
+        box-sizing: border-box;
+        word-wrap: break-word;
+        overflow-wrap: break-word;
+      }
+
+      /* Adjust top buttons for very small screens */
+      .topButtons {
+        flex-direction: column;
+        align-items: center;
+        gap: 0.5rem;
+        position: static;
+        margin-bottom: 1rem;
+      }
+
+      .leftButtons,
+      .rightButtons {
+        display: flex;
+        flex-direction: column;
+        gap: 0.5rem;
+        width: 100%;
+      }
+
+      .modeButton,
+      .leaderboard-button-unique {
+        width: 100%;
+        max-width: none;
+      }
+
+      .leaderboard-container {
+        width: 90%;
+        margin: 1rem auto;
+        padding: 1rem;
+        top: 0;
+      }
+
+      .leaderboard-container table {
+        font-size: 0.8rem;
+      }
+
+      .leaderboard-container th,
+      .leaderboard-container td {
+        padding: 0.3rem;
+      }
+
+      .leaderboard-tabs {
+        flex-wrap: wrap;
+        justify-content: center;
+      }
+
+      .leaderboard-tabs button {
+        margin: 0.2rem;
+      }
+
+      .quiz h2 {
+        font-size: 1rem;
+      }
+
+      .quizAnswersContainer {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 0.5rem;
+      }
+
+      .answers {
+        font-size: 0.8rem;
+        padding: 0.5rem;
+        white-space: normal;
+        height: auto;
+      }
+    }
+
+    /* Responsive styles for ranked quiz */
+    @media (max-width: 768px) {
+      .ranked-quiz {
+        padding: 10px;
+      }
+
+      .ranked-quiz .timer.fixed-timer {
+        font-size: 1.5em;
+        padding: 5px;
+      }
+
+      .ranked-quiz .question {
+        font-size: 1rem;
+        margin-bottom: 10px;
+      }
+
+      .ranked-quiz .answers {
+        display: flex;
+        flex-direction: column;
+      }
+
+      .ranked-quiz .answer-button {
+        font-size: 0.9rem;
+        padding: 8px;
+        margin-bottom: 5px;
+      }
+
+      .ranked-quiz .bottomBox {
+        margin-top: 10px;
+      }
+
+      .ranked-quiz .submit-button,
+      .ranked-quiz .exit-button {
+        font-size: 0.9rem;
+        padding: 8px 16px;
+      }
+
+      .ranked-quiz .score {
+        font-size: 1rem;
+      }
+    }
+
+    @media (max-width: 480px) {
+      .ranked-quiz .timer.fixed-timer {
+        font-size: 1.2em;
+      }
+
+      .ranked-quiz .question {
+        font-size: 0.9rem;
+      }
+
+      .ranked-quiz .answer-button {
+        font-size: 0.8rem;
+        padding: 6px;
+      }
+
+      .ranked-quiz .submit-button,
+      .ranked-quiz .exit-button {
+        font-size: 0.8rem;
+        padding: 6px 12px;
+      }
+    }
+
+    /* Additional styles for very small screens */
+    @media (max-width: 375px) {
+      .ranked-quiz {
+        padding: 5px;
+      }
+
+      .ranked-quiz .timer.fixed-timer {
+        font-size: 1em;
+        padding: 3px;
+      }
+
+      .ranked-quiz .question {
+        font-size: 0.8rem;
+        margin-bottom: 5px;
+      }
+
+      .ranked-quiz .answer-button {
+        font-size: 0.7rem;
+        padding: 4px;
+        margin-bottom: 3px;
+      }
+
+      .ranked-quiz .submit-button,
+      .ranked-quiz .exit-button {
+        font-size: 0.7rem;
+        padding: 4px 8px;
+      }
+
+      .ranked-quiz .score {
+        font-size: 0.8rem;
+      }
+
+      /* Prevent horizontal overflow */
+      .ranked-quiz,
+      .ranked-quiz .question,
+      .ranked-quiz .answers,
+      .ranked-quiz .answer-button,
+      .ranked-quiz .bottomBox {
+        max-width: 100%;
+        box-sizing: border-box;
+      }
+
+      .quizAnswersContainer {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 0.5em;
+      }
+
+      .answers {
+        width: 100%;
+        font-size: 0.7rem;
+        padding: 0.4em;
+      }
+    }
+
+
+    .ranked-setup h2 {
+      margin-bottom: 20px;
+    }
+
+    .ranked-setup p {
+      margin-bottom: 20px;
+    }
+
+    .ranked-setup select {
+      margin-bottom: 20px;
+      padding: 10px;
+      font-size: 16px;
+      width: 200px;
+      /* Adjust as needed */
+    }
+
+    .ranked-start-button {
+      background-color: #D32F2F;
+      color: white;
+      border: none;
+      padding: 10px 20px;
+      border-radius: 5px;
+      cursor: pointer;
+      font-size: 16px;
+      font-weight: bold;
+      margin-top: 20px;
+      width: 200px;
+      /* Match the width of the select element */
+    }
+
+    .ranked-start-button:hover {
+      background-color: #B71C1C;
+    }
+
+    /* Add this at the end of your existing CSS */
+
+    @media (max-width: 480px) {
+      .quiz {
+        width: 100%;
+        padding: 0.5em;
+      }
+
+      .quiz h2 {
+        font-size: 1rem;
+        margin-bottom: 1em;
+      }
+
+      .quizAnswersContainer {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        grid-gap: 0.5em;
+        width: 100%;
+      }
+
+      .answers {
+        width: 100%;
+        font-size: 0.8rem;
+        padding: 0.5em;
+        margin: 0;
+        box-sizing: border-box;
+      }
+    }
+
+    /* Add this to your existing styles */
+    .app-container.noMargin {
+      margin-top: 0;
+      padding-top: 0;
+    }

@@ -193,7 +193,7 @@ export default function App() {
 
   const DarkModeToggle = () => (
     <button
-      className={`modeButton darkness darkModeButton ${colorMode === "dark" ? "darkMode" : "lightMode"}`}
+      className={`modeButton darkness darkModeButton POES ${colorMode === "dark" ? "darkMode" : "lightMode"}`}
       onClick={() => setColorMode(prev => prev === "dark" ? "light" : "dark")}
     >
       {colorMode === "dark" ? "Light Mode" : "Dark Mode"}
@@ -205,32 +205,23 @@ export default function App() {
       onClick={toggleLeaderboard}
       className={`modeButton leaderboard-button-unique ${colorMode === "dark" ? "darkMode" : ""}`}
     >
-      {showLeaderboard ? "Main Menu" : "Leaderboard"}
+      Leaderboard
     </button>
   );
 
   const TopButtons = () => (
     <div className={`topButtons ${showLeaderboard ? 'leaderboard-view' : ''}`}>
-      {showLeaderboard ? (
-        <>
-          <DarkModeToggle />
-          <LeaderboardButton />
-        </>
-      ) : (
-        <>
-          <div className="leftButtons">
-            {user && <LeaderboardButton />}
-          </div>
-          <div className="rightButtons">
-            <DarkModeToggle />
-            {user && (
-              <button onClick={handleSignOut} className="auth-button">
-                Sign Out
-              </button>
-            )}
-          </div>
-        </>
-      )}
+      <div className="buttonGroup">
+        <DarkModeToggle />
+        {user && !startQuiz && !isRankedMode && (
+          <>
+            <LeaderboardButton />
+            <button onClick={handleSignOut} className="auth-button modeButton">
+              Sign Out
+            </button>
+          </>
+        )}
+      </div>
     </div>
   );
 
@@ -319,6 +310,10 @@ export default function App() {
 
   const toggleLeaderboard = () => {
     setShowLeaderboard(!showLeaderboard);
+    if (showLeaderboard) {
+      setStartQuiz(false);
+      setIsRankedMode(false);
+    }
   };
 
   const getContainerClassName = () => {
@@ -338,7 +333,7 @@ export default function App() {
         </div>
       )}
       {showLeaderboard ? (
-        <Leaderboard user={user} />
+        <Leaderboard user={user} onBackToMenu={toggleLeaderboard} />
       ) : (
         !user ? (
           <Auth setUser={setUser} />
