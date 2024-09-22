@@ -223,7 +223,11 @@ export default function App() {
           </div>
           <div className="rightButtons">
             <DarkModeToggle />
-            {user && <SignOutButton />}
+            {user && (
+              <button onClick={handleSignOut} className="auth-button">
+                Sign Out
+              </button>
+            )}
           </div>
         </>
       )}
