@@ -193,7 +193,7 @@ export default function App() {
 
   const DarkModeToggle = () => (
     <button
-      className={`modeButton darkModeButton ${colorMode === "dark" ? "darkMode" : "lightMode"}`}
+      className={`modeButton darkness darkModeButton ${colorMode === "dark" ? "darkMode" : "lightMode"}`}
       onClick={() => setColorMode(prev => prev === "dark" ? "light" : "dark")}
     >
       {colorMode === "dark" ? "Light Mode" : "Dark Mode"}
@@ -203,40 +203,32 @@ export default function App() {
   const LeaderboardButton = () => (
     <button
       onClick={toggleLeaderboard}
-      className={`modeButton leaderboardButton ${colorMode === "dark" ? "darkMode" : ""}`}
+      className={`modeButton leaderboard-button-unique ${colorMode === "dark" ? "darkMode" : ""}`}
     >
       {showLeaderboard ? "Main Menu" : "Leaderboard"}
     </button>
   );
 
-  const SignOutButton = () => (
-    <button
-      className={`modeButton signOutButton ${colorMode === "dark" ? "darkMode" : "lightMode"}`}
-      onClick={handleSignOut}
-    >
-      Sign Out
-    </button>
-  );
-
-  const TopButtons = () => {
-    const shouldShowButtons = !startQuiz && !isRankedMode;
-
-    return (
-      <div className={`topButtons ${showLeaderboard ? 'leaderboard-view' : ''}`}>
-        {(shouldShowButtons || showLeaderboard) && (
-          <>
+  const TopButtons = () => (
+    <div className={`topButtons ${showLeaderboard ? 'leaderboard-view' : ''}`}>
+      {showLeaderboard ? (
+        <>
+          <DarkModeToggle />
+          <LeaderboardButton />
+        </>
+      ) : (
+        <>
+          <div className="leftButtons">
+            {user && <LeaderboardButton />}
+          </div>
+          <div className="rightButtons">
             <DarkModeToggle />
-            {user && (
-              <>
-                <LeaderboardButton />
-                {!showLeaderboard && <SignOutButton />}
-              </>
-            )}
-          </>
-        )}
-      </div>
-    );
-  };
+            {user && <SignOutButton />}
+          </div>
+        </>
+      )}
+    </div>
+  );
 
   const quizSetup = (
     <>

@@ -50,6 +50,14 @@ function RankedQuiz({ user, difficulty, setDifficulty, setIsRankedMode }) {
             const timeTaken = Math.min(180, Math.floor((Date.now() - startTimeRef.current) / 1000));
             updateUserScore(user.uid, finalScore, timeTaken);
             console.log(`Quiz submitted. Score: ${finalScore}, Time taken: ${timeTaken}`);
+
+            // Scroll to top after a short delay to ensure the component has updated
+            setTimeout(() => {
+                window.scrollTo({
+                    top: 0,
+                    behavior: 'smooth'
+                });
+            }, 100);
         }
         if (isTimeUp) {
             setTimeLeft(0);

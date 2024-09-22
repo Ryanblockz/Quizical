@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react'
 import { ref, get } from "firebase/database"
 import { rtdb } from '../firebase'
 
-function Leaderboard({ user }) {
+function Leaderboard({ user, onBackToMenu }) {
     const [leaderboardData, setLeaderboardData] = useState({})
     const [selectedDifficulty, setSelectedDifficulty] = useState('easy')
 
@@ -75,6 +75,7 @@ function Leaderboard({ user }) {
 
     return (
         <div className="leaderboard-container">
+            <button onClick={onBackToMenu} className="back-to-menu-button">Back to Main Menu</button>
             <h2>Leaderboard</h2>
             <div className="leaderboard-tabs">
                 {['easy', 'medium', 'hard'].map(difficulty => (

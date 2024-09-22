@@ -481,20 +481,19 @@ p {
 /* Add these new styles to your existing CSS */
 
 .topButtons {
-  position: fixed;
-  top: 10px;
-  right: 10px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+  padding: 10px;
+  box-sizing: border-box;
+}
+
+.leftButtons,
+.rightButtons {
   display: flex;
   gap: 10px;
-  z-index: 1002;
 }
-
-.ranked-content>select {
-  margin: 1em !important;
-  scale: 1.5;
-  margin-bottom: 1.5em !important;
-}
-
 
 .modeButton {
   padding: 5px 10px;
@@ -504,221 +503,45 @@ p {
   transition: background-color 0.3s, color 0.3s;
 }
 
-.darkModeButton,
-.leaderboardButton,
-.signOutButton {
+.darkModeButton {
+  position: fixed;
+  top: 10px;
+  left: 10px;
+  z-index: 1002;
+}
+
+.leaderboardButton {
+  /* Add any specific styles for the leaderboard button here */
+}
+
+.modeButton {
   background-color: #f0f0f0;
   color: #333;
   border: 1px solid #ccc;
 }
 
-.darkModeButton:hover,
-.leaderboardButton:hover,
-.signOutButton:hover {
+.modeButton:hover {
   background-color: #e0e0e0;
 }
 
-.darkMode.darkModeButton,
-.darkMode.leaderboardButton,
-.darkMode.signOutButton {
+.modeButton.darkMode {
   background-color: #333;
   color: #f0f0f0;
   border-color: #666;
 }
 
-.darkMode.darkModeButton:hover,
-.darkMode.leaderboardButton:hover,
-.darkMode.signOutButton:hover {
+.modeButton.darkMode:hover {
   background-color: #444;
 }
 
 .leaderboard-view .leaderboardButton {
-  background-color: #4CAF50;
-  color: white;
-}
-
-.leaderboard-view .leaderboardButton:hover {
-  background-color: #45a049;
-}
-
-.error-message {
-  color: #d32f2f;
-  font-size: 0.875rem;
-  margin-top: 0.5rem;
-  margin-bottom: 0.5rem;
-  font-weight: bold;
-  text-decoration: none !important;
-}
-
-/* This additional rule ensures no text decoration on any child elements */
-.error-message * {
-  text-decoration: none !important;
-}
-
-.auth-toggle {
-  cursor: pointer;
-  color: #4D5B9E;
-  text-decoration: underline;
-  margin-top: 1.25rem;
-  font-size: 1rem;
-}
-
-.forgot-password {
-  font-size: 1.2rem;
-  color: #d32f2f;
-  margin-top: 0.5rem;
-  margin-bottom: 0.5rem;
-}
-
-.reset-email-sent {
-  color: #4CAF50;
-  font-size: 1rem;
-  margin-top: 0.625rem;
-  margin-bottom: 0.625rem;
-}
-
-/* Adjust input placeholder color */
-.auth-container input::placeholder {
-  color: #293264;
-  opacity: 0.7;
-}
-
-/* Adjust focus styles for inputs */
-.auth-container input:focus,
-.password-input-container input:focus {
-  outline: none;
-  border-color: #4D5B9E;
-  box-shadow: 0 0 0 2px rgba(77, 91, 158, 0.2);
-}
-
-.forgot-password-button {
-  background: none;
-  border: none;
-  color: #4D5B9E;
-  cursor: pointer;
-  font-size: 0.875rem;
-  padding: 0.5rem 0;
-  text-decoration: underline;
-  width: auto;
-  margin-bottom: 1rem;
-}
-
-.forgot-password-button:hover {
-  color: #414e8c;
-}
-
-.reset-email-sent {
-  color: #4CAF50;
-  font-size: 0.875rem;
-  margin-bottom: 1rem;
-}
-
-.leaderboard-container {
-  max-width: 800px;
-  margin: 2rem auto 0;
-  /* Increased top margin */
-  padding: 20px;
-  background-color: #f5f7fb;
-  border-radius: 10px;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-  position: relative;
-  top: -130px;
-  /* Adjust this value to move the leaderboard higher */
-}
-
-.leaderboard-container h2 {
-  text-align: center;
-  color: #4D5B9E;
-  margin-bottom: 1rem;
-}
-
-.leaderboard-container table {
-  width: 100%;
-  border-collapse: collapse;
-  margin-top: 1rem;
-}
-
-.leaderboard-container th,
-.leaderboard-container td {
-  padding: 12px;
-  text-align: left;
-  border-bottom: 1px solid #ddd;
-}
-
-.leaderboard-container th {
-  background-color: #4D5B9E;
-  color: white;
-}
-
-.leaderboard-container tr:nth-child(even) {
-  background-color: #f2f2f2;
-}
-
-.leaderboard-container .current-user {
-  font-weight: bold;
-  background-color: #e6f7ff;
-}
-
-.leaderboard-tabs {
-  display: flex;
-  justify-content: center;
-  margin-bottom: 1rem;
-}
-
-.leaderboard-tabs button {
-  padding: 8px 16px;
-  margin: 0 4px;
-  border: none;
-
-  cursor: pointer;
-  border-radius: 4px;
-  transition: background-color 0.3s, color 0.3s;
-}
-
-.leaderboard-tabs button.active {
-  background-color: #0e7932;
-  color: white;
-}
-
-.success-message {
-  color: #4CAF50;
-  font-size: 1rem;
-  margin-bottom: 1rem;
-  text-align: center;
-}
-
-.welcome-message {
-  background-color: #4CAF50;
-  color: white;
-  padding: 10px;
-  text-align: center;
   position: fixed;
-  top: 60px;
-  left: 0;
-  right: 0;
-  z-index: 1000;
-  animation: fadeIn 0.5s, fadeOut 0.5s 4.5s;
+  top: 10px;
+  right: 10px;
+  z-index: 1002;
 }
 
-@keyframes fadeIn {
-  from {
-    opacity: 0;
-  }
-
-  to {
-    opacity: 1;
-  }
-}
-
-@keyframes fadeOut {
-  from {
-    opacity: 1;
-  }
-
-  to {
-    opacity: 0;
-  }
-}
+/* ... (rest of the styles remain the same) */
 
 .ranked-setup {
   position: fixed;
@@ -796,18 +619,307 @@ p {
 }
 
 @media (max-width: 480px) {
+  .ranked-quiz .timer.fixed-timer {
+    font-size: 1.2em;
+  }
+
+  .ranked-quiz .question {
+    font-size: 0.9rem;
+  }
+
+  .ranked-quiz .answer-button {
+    font-size: 0.8rem;
+    padding: 6px;
+  }
+
+  .ranked-quiz .submit-button,
+  .ranked-quiz .exit-button {
+    font-size: 0.8rem;
+    padding: 6px 12px;
+  }
+}
+
+/* Additional styles for very small screens */
+@media (max-width: 375px) {
+  #root {
+    padding: 1rem;
+    padding-top: 3.375rem;
+    max-width: 100vw;
+    overflow-x: hidden;
+  }
+
+  .ranked-quiz {
+    padding: 5px;
+  }
+
+  .ranked-quiz .timer.fixed-timer {
+    font-size: 0.9em;
+    padding: 2px;
+  }
+
+  .ranked-quiz .question {
+    font-size: 0.75rem;
+    margin-bottom: 5px;
+  }
+
+  .ranked-quiz .answers {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .ranked-quiz .answer-button {
+    font-size: 0.7rem;
+    padding: 4px;
+    margin-bottom: 3px;
+    white-space: normal;
+    height: auto;
+    min-height: 44px;
+  }
+
+  .ranked-quiz .submit-button,
+  .ranked-quiz .exit-button {
+    font-size: 0.7rem;
+    padding: 4px 8px;
+  }
+
+  .ranked-quiz .score {
+    font-size: 0.8rem;
+  }
+
+  /* Prevent horizontal overflow */
+  .ranked-quiz,
+  .ranked-quiz .question,
+  .ranked-quiz .answers,
+  .ranked-quiz .answer-button,
+  .ranked-quiz .bottomBox {
+    max-width: 100%;
+    box-sizing: border-box;
+    word-wrap: break-word;
+    overflow-wrap: break-word;
+  }
+
+  /* Adjust top buttons for very small screens */
   .topButtons {
     flex-direction: column;
-    align-items: flex-end;
-    top: 5px;
-    right: 5px;
+    align-items: center;
+    gap: 0.5rem;
+    position: static;
+    margin-bottom: 1rem;
   }
 
-  .modeButton {
+  .leftButtons,
+  .rightButtons {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    width: 100%;
+  }
+
+  .modeButton,
+  .leaderboard-button-unique {
+    width: 100%;
+    max-width: none;
+  }
+
+  .leaderboard-container {
+    width: 90%;
+    margin: 1rem auto;
+    padding: 1rem;
+    top: 0;
+  }
+
+  .leaderboard-container table {
     font-size: 0.8rem;
-    padding: 3px 6px;
   }
 
+  .leaderboard-container th,
+  .leaderboard-container td {
+    padding: 0.3rem;
+  }
+
+  .leaderboard-tabs {
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+
+  .leaderboard-tabs button {
+    margin: 0.2rem;
+  }
+
+  .quiz h2 {
+    font-size: 1rem;
+  }
+
+  .quizAnswersContainer {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 0.5rem;
+  }
+
+  .answers {
+    font-size: 0.8rem;
+    padding: 0.5rem;
+    white-space: normal;
+    height: auto;
+  }
+}
+
+/* Responsive styles for ranked quiz */
+@media (max-width: 768px) {
+  .ranked-quiz {
+    padding: 10px;
+  }
+
+  .ranked-quiz .timer.fixed-timer {
+    font-size: 1.5em;
+    padding: 5px;
+  }
+
+  .ranked-quiz .question {
+    font-size: 1rem;
+    margin-bottom: 10px;
+  }
+
+  .ranked-quiz .answers {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .ranked-quiz .answer-button {
+    font-size: 0.9rem;
+    padding: 8px;
+    margin-bottom: 5px;
+  }
+
+  .ranked-quiz .bottomBox {
+    margin-top: 10px;
+  }
+
+  .ranked-quiz .submit-button,
+  .ranked-quiz .exit-button {
+    font-size: 0.9rem;
+    padding: 8px 16px;
+  }
+
+  .ranked-quiz .score {
+    font-size: 1rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .ranked-quiz .timer.fixed-timer {
+    font-size: 1.2em;
+  }
+
+  .ranked-quiz .question {
+    font-size: 0.9rem;
+  }
+
+  .ranked-quiz .answer-button {
+    font-size: 0.8rem;
+    padding: 6px;
+  }
+
+  .ranked-quiz .submit-button,
+  .ranked-quiz .exit-button {
+    font-size: 0.8rem;
+    padding: 6px 12px;
+  }
+}
+
+/* Additional styles for very small screens */
+@media (max-width: 375px) {
+  .ranked-quiz {
+    padding: 5px;
+  }
+
+  .ranked-quiz .timer.fixed-timer {
+    font-size: 1em;
+    padding: 3px;
+  }
+
+  .ranked-quiz .question {
+    font-size: 0.8rem;
+    margin-bottom: 5px;
+  }
+
+  .ranked-quiz .answer-button {
+    font-size: 0.7rem;
+    padding: 4px;
+    margin-bottom: 3px;
+  }
+
+  .ranked-quiz .submit-button,
+  .ranked-quiz .exit-button {
+    font-size: 0.7rem;
+    padding: 4px 8px;
+  }
+
+  .ranked-quiz .score {
+    font-size: 0.8rem;
+  }
+
+  /* Prevent horizontal overflow */
+  .ranked-quiz,
+  .ranked-quiz .question,
+  .ranked-quiz .answers,
+  .ranked-quiz .answer-button,
+  .ranked-quiz .bottomBox {
+    max-width: 100%;
+    box-sizing: border-box;
+  }
+
+  .quizAnswersContainer {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 0.5em;
+  }
+
+  .answers {
+    width: 100%;
+    font-size: 0.7rem;
+    padding: 0.4em;
+  }
+}
+
+
+.ranked-setup h2 {
+  margin-bottom: 20px;
+}
+
+.ranked-setup p {
+  margin-bottom: 20px;
+}
+
+.ranked-setup select {
+  margin-bottom: 20px;
+  padding: 10px;
+  font-size: 16px;
+  width: 200px;
+  /* Adjust as needed */
+}
+
+.ranked-start-button {
+  background-color: #D32F2F;
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 16px;
+  font-weight: bold;
+  margin-top: 20px;
+  width: 200px;
+  /* Match the width of the select element */
+}
+
+.ranked-start-button:hover {
+  background-color: #B71C1C;
+}
+
+/* Add this at the end of your existing CSS */
+
+@media (max-width: 480px) {
   .quiz {
     width: 100%;
     padding: 0.5em;
@@ -820,7 +932,7 @@ p {
 
   .quizAnswersContainer {
     display: grid;
-    grid-template-columns: 1fr;
+    grid-template-columns: 1fr 1fr;
     grid-gap: 0.5em;
     width: 100%;
   }
@@ -831,35 +943,6 @@ p {
     padding: 0.5em;
     margin: 0;
     box-sizing: border-box;
-  }
-
-  .app-container {
-    padding-top: 80px;
-    /* Adjust this value to prevent overlap with buttons */
-  }
-
-  .leaderboard-container,
-  .auth-container,
-  .ranked-quiz {
-    margin-top: 60px;
-  }
-
-  .leaderboard-tabs {
-    flex-direction: column;
-    align-items: center;
-  }
-
-  .leaderboard-tabs button {
-    margin-bottom: 5px;
-  }
-
-  table {
-    font-size: 0.8rem;
-  }
-
-  .timer.fixed-timer {
-    font-size: 1rem;
-    padding: 5px;
   }
 }
 
