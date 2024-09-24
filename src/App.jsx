@@ -191,14 +191,14 @@ export default function App() {
     });
   };
 
-  const DarkModeToggle = () => (
+  const DarkModeToggle = () => !startQuiz ? (
     <button
-      className={`modeButton darkness darkModeButton POES ${colorMode === "dark" ? "darkMode" : "lightMode"}`}
+      className={`modeButton darkness darkModeButton ${startQuiz ? POES : ""} ${colorMode === "dark" ? "darkMode" : "lightMode"}`}
       onClick={() => setColorMode(prev => prev === "dark" ? "light" : "dark")}
     >
       {colorMode === "dark" ? "Light Mode" : "Dark Mode"}
     </button>
-  );
+  ) : "";
 
   const LeaderboardButton = () => (
     <button

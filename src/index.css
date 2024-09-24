@@ -32,7 +32,6 @@ body {
   font-family: "karla", sans-serif;
   color: #293264;
   background-color: #F5F7FB;
-  z-index: 1;
 }
 
 h1 {
@@ -64,8 +63,34 @@ button:active {
   color: black;
 }
 
+
+@media (prefers-color-scheme: light) {
+  :root {
+    color: #213547;
+    background-color: #ffffff;
+  }
+
+  a:hover {
+    color: #747bff;
+  }
+
+  button {
+    background-color: #f9f9f9;
+  }
+}
+
 .darkModeButton {
-  align-self: flex-start;
+  align-self: flex-end;
+  position: fixed;
+  top: 0.625rem;
+  right: 0.625rem;
+  z-index: 1002;
+  padding: 0.3125rem 0.625rem;
+  border-radius: 0.3125rem;
+  cursor: pointer;
+  font-weight: bold;
+  transition: background-color 0.3s, color 0.3s;
+
 }
 
 .top-right {
@@ -79,7 +104,6 @@ button:active {
   position: fixed;
   bottom: 0;
   left: 0;
-  z-index: 0;
 }
 
 .quiz {
